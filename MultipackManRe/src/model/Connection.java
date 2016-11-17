@@ -27,6 +27,7 @@ public class Connection extends Thread {
     private ObjectInputStream rx;
     private String action;
     private MainWindowServer mainWindowServer;
+    private ArrayList<Connection> connections;
     private int id;
     private String ip;
     private String name;
@@ -38,6 +39,7 @@ public class Connection extends Thread {
         this.id = ID_COUNT;
         this.working = true;
         this.mainWindowServer = mainWindowServer;
+        this.connections = connections;
         action = "";
         try {
             tx = new ObjectOutputStream(socket.getOutputStream());
@@ -74,6 +76,17 @@ public class Connection extends Thread {
         }
     }
 
+    private void sendAll(String ip, String name) {
+        for (Connection connection : connections) {
+            try {
+                connection.sendString(name);
+                connection.sendString(ip);
+            } catch (IOException ex) {
+                Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
     @Override
     public void run() {
         super.run();
@@ -91,7 +104,6 @@ public class Connection extends Thread {
                         name = (String) receiveObject();
                         ip = (String) receiveObject();
                         mainWindowServer.addClient(ip, id + "." + name);
-                        
                         //sendAll(name, ip);
                         //sendList();
                         break;
@@ -112,6 +124,16 @@ public class Connection extends Thread {
         } catch (IOException ex) {
             Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public boolean validConnectionUser() throws IOException {
+        int i = 0;
+        for (Connection connection : connections) {
+            if (ip.equals(connection.getIp())) {
+                i++;
+            }
+        }
+        return i < Server.CONNECTION_MAX_USER;
     }
 
     public void sendString(String string) throws IOException {

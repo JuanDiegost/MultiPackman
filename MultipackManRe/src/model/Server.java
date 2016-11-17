@@ -63,7 +63,6 @@ public class Server extends Thread {
 
     private void messageInit() {
         System.out.println("Servidor List");
-        System.out.println("Servicio de hacer sumas");
         try {
             InetAddress address = InetAddress.getLocalHost();
             System.out.println("IP SERVIDOR: " + address.getHostAddress());
