@@ -10,13 +10,15 @@ package value;
  * @author PC
  */
 public class Global {
- 
-    public static final int DEFAULT_PORT=12345;
-    public static final String DEFAULT_SERVER="localhost";
-    public static final String ACTION_REGISTER="register";
-    public static final String ACTION_SHOW_WINDOW="window";
-    public static final String ACTION_NEW_USER="newUser";
-    public static final String ACTION_CLOSE_CONNECTION="closeConnection";
-    public static final String TEXT_USER_MAX_CONNECT="Servidor lleno";
-    
+
+    public static final int DEFAULT_PORT = 12345;
+    public static final String DEFAULT_SERVER = "localhost";
+    public static final String ACTION_REGISTER = "register";
+    public static final String ACTION_SHOW_WINDOW = "window";
+    public static final String ACTION_NEW_USER = "newUser";
+    public static final String ACTION_CLOSE_CONNECTION = "closeConnection";
+    public static final String TEXT_USER_MAX_CONNECT = "Servidor Lleno";
+    public static final String TEXT_MAX_CONNECTION_BY_USER = "No tienes permitido realizar mas conexiones a este servidor";
+    public static final String ACTION_IP = "/ip";
+
 }

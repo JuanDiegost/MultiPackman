@@ -5,9 +5,7 @@
  */
 package view;
 
-import java.io.Serializable;
 import javax.swing.DefaultListModel;
-import javax.swing.JList;
 
 /**
  *
@@ -33,9 +31,16 @@ public class MainWindowServer extends javax.swing.JFrame {
         return modelName;
     }
     
-    public void remove(String name,String ip){
+    public void remove(String name){
+        for (int i = 0; i < modelName.getSize(); i++) {
+            String object = modelName.get(i);
+            if (object.equals(name)) {
+                modelName.remove(i);
+                modelIp.remove(i);
+            }
+            
+        }
         modelName.removeElement(name);
-        modelIp.removeElement(ip);
     }
 
     public void setModelName(DefaultListModel<String> modelName) {
@@ -48,7 +53,7 @@ public class MainWindowServer extends javax.swing.JFrame {
     }
 
     public void setModelIp(DefaultListModel<String> modelIp) {
-        this.modelIp = modelIp;
+         this.modelIp = modelIp;
          jList2.setModel(modelIp);
     }
     

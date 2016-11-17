@@ -1,6 +1,5 @@
 package model;
 
-
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
@@ -17,21 +16,22 @@ import view.MainWindowServer;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author Juan Diego Molina
  */
-public class Server extends Thread{
+public class Server extends Thread {
+
     private ServerSocket server;
     private MainWindowServer console;
     private ArrayList<Connection> connections;
-    private int connectionMax; 
+    public static final int CONNECTION_MAX_SERVER = 5;
+    public static final int CONNECTION_MAX_USER = 2;
+
     public Server() throws IOException {
         this.server = new ServerSocket(Global.DEFAULT_PORT);
-        this.connectionMax=0;
-        console=new MainWindowServer();
-        connections=new ArrayList<>();
+        console = new MainWindowServer();
+        connections = new ArrayList<>();
         console.setVisible(true);
         start();
     }
@@ -40,18 +40,18 @@ public class Server extends Thread{
     public void run() {
         super.run();
         messageInit();
-        int countConneccion=0;
-        while (true) {            
-            Socket socket=null;
+        int countConneccion = 0;
+        while (true) {
+            Socket socket = null;
             try {
-                socket=server.accept();
+                socket = server.accept();
                 System.out.println("model.Server.run()");
-                Connection connection=new Connection(socket,console,connections);
-                if (countConneccion<connectionMax) {
-                    connections.add(connection);
+                Connection connection = new Connection(socket, console, connections);
+                connection.sendString(Global.ACTION_IP);
+                if (countConneccion < CONNECTION_MAX_SERVER) {
                     connection.connectionAccepted();
-                    countConneccion++;
-                }else{
+                    System.out.println(connection.getIp());
+                } else {
                     connection.maxNumberUserConnect();
                 }
             } catch (IOException ex) {
@@ -59,13 +59,13 @@ public class Server extends Thread{
             }
         }
     }
-    
-    private void messageInit(){
+
+    private void messageInit() {
         System.out.println("Servidor List");
         System.out.println("Servicio de hacer sumas");
         try {
-            InetAddress address=InetAddress.getLocalHost();
-            System.out.println("IP SERVIDOR: "+address.getHostAddress());
+            InetAddress address = InetAddress.getLocalHost();
+            System.out.println("IP SERVIDOR: " + address.getHostAddress());
         } catch (UnknownHostException ex) {
             Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
         }

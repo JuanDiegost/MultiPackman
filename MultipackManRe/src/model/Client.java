@@ -10,13 +10,10 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
-import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import value.Global;
-import view.MainWindowServer;
 
 /**
  *
@@ -57,11 +54,12 @@ public class Client extends Thread {
                 try {
                     action = receiveAction();
                 } catch (IOException ex) {
-                    
+
                 }
                 switch (action) {
-                    case Global.ACTION_SHOW_WINDOW:
-
+                    case Global.ACTION_IP:
+                        InetAddress address = InetAddress.getLocalHost();
+                        sendString(address.getHostAddress());
                         break;
                     case Global.ACTION_NEW_USER:
                         register();
@@ -76,7 +74,7 @@ public class Client extends Thread {
                         break;
                 }
             } catch (IOException ex) {
-                
+
             }
         }
     }
@@ -101,11 +99,11 @@ public class Client extends Thread {
 
     private void register() {
         try {
-            sendString(Global.ACTION_REGISTER);
-            String name = JOptionPane.showInputDialog("Por favor escriba Su nombre: ");
             InetAddress address = InetAddress.getLocalHost();
-            sendObject(address.getHostAddress());
+            String name = JOptionPane.showInputDialog("Por favor escriba Su nombre: ");
+            sendString(Global.ACTION_REGISTER);
             sendObject(name);
+            sendObject(address.getHostAddress());
         } catch (IOException ex) {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         }
