@@ -58,8 +58,8 @@ public class Client extends Thread {
                 }
                 switch (action) {
                     case Global.ACTION_IP:
-                        InetAddress address = InetAddress.getLocalHost();
-                        sendString(address.getHostAddress());
+                        //InetAddress address = InetAddress.getLocalHost();
+                        //sendString(address.getHostAddress());
                         break;
                     case Global.ACTION_NEW_USER:
                         register();

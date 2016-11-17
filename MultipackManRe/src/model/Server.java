@@ -47,9 +47,10 @@ public class Server extends Thread {
                 socket = server.accept();
                 System.out.println("model.Server.run()");
                 Connection connection = new Connection(socket, console, connections);
-                connection.sendString(Global.ACTION_IP);
+                //connection.sendString(Global.ACTION_IP);
                 if (countConneccion < CONNECTION_MAX_SERVER) {
                     connection.connectionAccepted();
+                    countConneccion++;
                     System.out.println(connection.getIp());
                 } else {
                     connection.maxNumberUserConnect();
