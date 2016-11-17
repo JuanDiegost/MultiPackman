@@ -8,10 +8,13 @@ package model;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.InetAddress;
 import java.net.Socket;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import value.Global;
 import view.MainWindowServer;
 
@@ -19,78 +22,93 @@ import view.MainWindowServer;
  *
  * @author Juan Diego Molina
  */
-public class Client extends Thread{
+public class Client extends Thread {
 
     private Socket socket;
     private ObjectOutputStream tx;
     private ObjectInputStream rx;
     private String action;
-    private MainWindowServer windows;
+    private boolean working;
 
     public Client(String address) {
         try {
-            this.socket=new Socket(address, Global.DEFAULT_PORT);
-            windows=new MainWindowServer();
-            action="";
+            this.socket = new Socket(address, Global.DEFAULT_PORT);
+            working = true;
+            action = "";
+            configureConnection();
+        } catch (IOException ex) {
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    private void configureConnection() throws IOException {
+        rx = new ObjectInputStream(socket.getInputStream());
+        tx = new ObjectOutputStream(socket.getOutputStream());
+        tx.flush();
+        start();
+    }
+
+    @Override
+    public void run() {
+        super.run();
+        while (working) {
             try {
-                rx=new ObjectInputStream(socket.getInputStream());
-                tx=new ObjectOutputStream(socket.getOutputStream());
-                tx.flush();
+                try {
+                    action = receiveAction();
+                } catch (IOException ex) {
+                    
+                }
+                switch (action) {
+                    case Global.ACTION_SHOW_WINDOW:
+
+                        break;
+                    case Global.ACTION_NEW_USER:
+                        register();
+                        break;
+                    case Global.ACTION_CLOSE_CONNECTION:
+                        String message = receiveAction();
+                        rx.close();
+                        tx.close();
+                        socket.close();
+                        working = false;
+                        JOptionPane.showMessageDialog(null, message);
+                        break;
+                }
             } catch (IOException ex) {
-                Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+                
             }
-            start();
+        }
+    }
+
+    public void sendString(String string) throws IOException {
+        tx.writeUTF(string);
+        tx.flush();
+    }
+
+    public void sendObject(Object object) throws IOException {
+        tx.writeObject(object);
+        tx.flush();
+    }
+
+    public Object receiveObject() throws IOException, ClassNotFoundException {
+        return rx.readObject();
+    }
+
+    public String receiveAction() throws IOException {
+        return rx.readUTF();
+    }
+
+    private void register() {
+        try {
+            sendString(Global.ACTION_REGISTER);
+            String name = JOptionPane.showInputDialog("Por favor escriba Su nombre: ");
+            InetAddress address = InetAddress.getLocalHost();
+            sendObject(address.getHostAddress());
+            sendObject(name);
         } catch (IOException ex) {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-     
-    
-    @Override
-    public void run() {
-        super.run();
-        while (true) {            
-            try {            
-                try {
-                    action = receiveAction();
-                } catch (IOException ex) {
-                    Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                switch (action){
-                    case Global.ACTION_SHOW_WINDOW:
-                        windows.setModelName((DefaultListModel<String>) receiveObject());
-                        windows.setModelIp((DefaultListModel<String>) receiveObject());
-                        windows.setTitle("user");
-                        //windowServer.setVisible(true);
-                        break;
-                    case Global.ACTION_NEW_USER:
-                        windows.addClient(receiveAction(), receiveAction());
-                        break;
-                }
-            } catch (IOException ex) {
-                Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
-    
-    public void sendString(String string) throws IOException{
-        tx.writeUTF(string);
-        tx.flush();
-    }
-    
-    public void sendObject(Object object) throws IOException{
-        tx.writeObject(object);
-        tx.flush();
-    }
-    
-    public Object receiveObject() throws IOException, ClassNotFoundException{
-        return rx.readObject();
-    }
-    
-    public String receiveAction() throws IOException{
-        return rx.readUTF();
-    }
-    
+
 }

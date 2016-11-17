@@ -16,5 +16,7 @@ public class Global {
     public static final String ACTION_REGISTER="register";
     public static final String ACTION_SHOW_WINDOW="window";
     public static final String ACTION_NEW_USER="newUser";
-
+    public static final String ACTION_CLOSE_CONNECTION="closeConnection";
+    public static final String TEXT_USER_MAX_CONNECT="Servidor lleno";
+    
 }

@@ -29,9 +29,11 @@ public class Connection extends Thread{
     private ArrayList<Connection> connections;
     private String ip;
     private String name;
+    private boolean working;
 
     public Connection(Socket socket,MainWindowServer mainWindowServer,ArrayList<Connection> connections) {
         this.socket=socket;
+        this.working=true;
         this.mainWindowServer=mainWindowServer;
         this.connections=connections;
         action="";
@@ -43,6 +45,31 @@ public class Connection extends Thread{
             Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
         }
         start();
+    }
+    
+    public void maxNumberUserConnect(){
+        try {
+            sendString(Global.ACTION_CLOSE_CONNECTION);
+            sendString(Global.TEXT_USER_MAX_CONNECT);
+            closeConnection();
+        } catch (IOException ex) {
+            Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private void closeConnection() throws IOException{
+            rx.close();
+            tx.close();
+            socket.close();
+            working=false;
+    }
+    
+    public void connectionAccepted(){
+        try {
+            sendString(Global.ACTION_NEW_USER);
+        } catch (IOException ex) {
+            Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
      
     private void sendAll(String ip,String name){
@@ -59,12 +86,13 @@ public class Connection extends Thread{
     @Override
     public void run() {
         super.run();
-        while (true) {            
+        while (working) {            
             try {            
                 try {
                     action = receiveAction();
                 } catch (IOException ex) {
                     mainWindowServer.remove(name, ip);
+                    socket.close();
                 }
                 switch (action){
                     case Global.ACTION_REGISTER:

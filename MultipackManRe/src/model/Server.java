@@ -26,9 +26,10 @@ public class Server extends Thread{
     private ServerSocket server;
     private MainWindowServer console;
     private ArrayList<Connection> connections;
-
+    private int connectionMax; 
     public Server() throws IOException {
         this.server = new ServerSocket(Global.DEFAULT_PORT);
+        this.connectionMax=0;
         console=new MainWindowServer();
         connections=new ArrayList<>();
         console.setVisible(true);
@@ -39,13 +40,20 @@ public class Server extends Thread{
     public void run() {
         super.run();
         messageInit();
+        int countConneccion=0;
         while (true) {            
             Socket socket=null;
             try {
                 socket=server.accept();
                 System.out.println("model.Server.run()");
                 Connection connection=new Connection(socket,console,connections);
-                connections.add(connection);
+                if (countConneccion<connectionMax) {
+                    connections.add(connection);
+                    connection.connectionAccepted();
+                    countConneccion++;
+                }else{
+                    connection.maxNumberUserConnect();
+                }
             } catch (IOException ex) {
                 Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
             }
