@@ -17,6 +17,5 @@ public class TestClient {
     
     public static void main(String[] args) {
         Client client=new Client(JOptionPane.showInputDialog("Por favor escriba la ip del servidor: "));
-        System.out.println("test.TestClient.main()");
     }
 }

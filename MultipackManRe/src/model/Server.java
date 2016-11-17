@@ -1,5 +1,6 @@
 package model;
 
+import java.awt.Point;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
@@ -24,14 +25,14 @@ public class Server extends Thread {
 
     private ServerSocket server;
     private MainWindowServer console;
-    private ArrayList<Connection> connections;
+    private ArrayList<Connection> listConnections;
     public static final int CONNECTION_MAX_SERVER = 5;
     public static final int CONNECTION_MAX_USER = 2;
 
     public Server() throws IOException {
         this.server = new ServerSocket(Global.DEFAULT_PORT);
         console = new MainWindowServer();
-        connections = new ArrayList<>();
+        listConnections = new ArrayList<>();
         console.setVisible(true);
         start();
     }
@@ -46,10 +47,11 @@ public class Server extends Thread {
             try {
                 socket = server.accept();
                 System.out.println("model.Server.run()");
-                Connection connection = new Connection(socket, console, connections);
+                Connection connection = new Connection(socket, console, listConnections);
                 //connection.sendString(Global.ACTION_IP);
                 if (countConneccion < CONNECTION_MAX_SERVER) {
                     connection.connectionAccepted();
+                    listConnections.add(connection);
                     countConneccion++;
                     System.out.println(connection.getIp());
                 } else {

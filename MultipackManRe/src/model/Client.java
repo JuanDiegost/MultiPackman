@@ -5,6 +5,7 @@
  */
 package model;
 
+import java.awt.Point;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -38,6 +39,25 @@ public class Client extends Thread {
         }
 
     }
+    
+    public void eatCookie(){
+        try {
+            sendString(Global.ACTION_EAT_COOKIE);
+        } catch (IOException ex) {
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void move(int o,int p){
+        try {
+            Point point=new Point(p, o);
+            sendString(Global.ACTION_MOVE);
+            sendObject(point);
+        } catch (IOException ex) {
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
 
     private void configureConnection() throws IOException {
         rx = new ObjectInputStream(socket.getInputStream());
@@ -50,6 +70,9 @@ public class Client extends Thread {
     public void run() {
         super.run();
         while (working) {
+            move(3, 3);
+            //if si se comio la galleta
+            
             try {
                 try {
                     action = receiveAction();
@@ -72,9 +95,26 @@ public class Client extends Thread {
                         working = false;
                         JOptionPane.showMessageDialog(null, message);
                         break;
+                    case Global.ACTION_SPAWN_COOKIE:
+                        //dar punro galleta ventana
+                        receiveObject();
+                        break;
+                    case Global.ACTION_MOVE_RIVALS_PACKMAN:
+                        int id=(int) receiveObject();
+                        Point point=(Point) receiveObject();
+                        System.out.println("id"+id+"pocicion: "+point.toString());
+                        //se lo mandamos a la ventana
+                        break;
+                    case Global.ACTION_NEW_OTHER_USER:
+                        //Optener id y nombre cliente
+                        int idNewClient=(int) receiveObject();
+                        String name=(String) receiveObject();
+                        break;
                 }
             } catch (IOException ex) {
 
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }

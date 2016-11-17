@@ -5,6 +5,7 @@
  */
 package model;
 
+import java.awt.Point;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -27,28 +28,55 @@ public class Connection extends Thread {
     private ObjectInputStream rx;
     private String action;
     private MainWindowServer mainWindowServer;
-    private ArrayList<Connection> connections;
+    private ArrayList<Connection> listConnections;
     private int id;
     private String ip;
     private String name;
+    private int score;
     private boolean working;
 
     public Connection(Socket socket, MainWindowServer mainWindowServer, ArrayList<Connection> connections) {
         this.socket = socket;
         ID_COUNT++;
+        this.score = 0;
         this.id = ID_COUNT;
         this.working = true;
         this.mainWindowServer = mainWindowServer;
-        this.connections = connections;
+        this.listConnections = connections;
         action = "";
         try {
             tx = new ObjectOutputStream(socket.getOutputStream());
             tx.flush();
             rx = new ObjectInputStream(socket.getInputStream());
+
         } catch (IOException ex) {
             Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
         }
         start();
+    }
+
+    private void addScore(){
+        score++;
+        for (Connection listConnection : listConnections) {
+            try {
+                listConnection.sendString(Global.ACTION_SCORE);
+                listConnection.sendObject(score);
+            } catch (IOException ex) {
+                Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+    
+    private void newUser() {
+        for (Connection listConnection : listConnections) {
+            try {
+                listConnection.sendString(Global.ACTION_NEW_OTHER_USER);
+                listConnection.sendObject(id);
+                listConnection.sendObject(name);
+            } catch (IOException ex) {
+                Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 
     public void maxNumberUserConnect() {
@@ -77,7 +105,7 @@ public class Connection extends Thread {
     }
 
     private void sendAll(String ip, String name) {
-        for (Connection connection : connections) {
+        for (Connection connection : listConnections) {
             try {
                 connection.sendString(name);
                 connection.sendString(ip);
@@ -104,8 +132,16 @@ public class Connection extends Thread {
                         name = (String) receiveObject();
                         ip = (String) receiveObject();
                         mainWindowServer.addClient(ip, id + "." + name);
+                        newUser();
                         //sendAll(name, ip);
                         //sendList();
+                        break;
+                    case Global.ACTION_MOVE:
+                        moveUser();
+                        break;
+                    case Global.ACTION_EAT_COOKIE:
+                        userEatCookie();
+                        addScore();
                         break;
                 }
             } catch (IOException ex) {
@@ -128,7 +164,7 @@ public class Connection extends Thread {
 
     public boolean validConnectionUser() throws IOException {
         int i = 0;
-        for (Connection connection : connections) {
+        for (Connection connection : listConnections) {
             if (ip.equals(connection.getIp())) {
                 i++;
             }
@@ -165,6 +201,44 @@ public class Connection extends Thread {
             closeConnection();
         } catch (IOException ex) {
             Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void moveUser() {
+        try {
+            Point point = (Point) receiveObject();
+            System.out.println(point.toString());
+            System.out.println("vacio" + listConnections.isEmpty());
+            for (Connection connection : listConnections) {
+                try {
+                    System.out.println("model.Connection.moveUser()");
+                    connection.sendString(Global.ACTION_MOVE_RIVALS_PACKMAN);
+                    connection.sendObject(id);
+                    connection.sendObject(point);
+                } catch (IOException ex) {
+                    Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public Point generateCookie() {
+        return new Point((int) (Math.random() * Global.DIMENCION.getWidth()), (int) (Math.random() * Global.DIMENCION.getHeight()));
+    }
+
+    private void userEatCookie() {
+        Point point = generateCookie();
+        for (Connection connection : listConnections) {
+            try {
+                connection.sendString(Global.ACTION_SPAWN_COOKIE);
+                connection.sendObject(point);
+            } catch (IOException ex) {
+                Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 }

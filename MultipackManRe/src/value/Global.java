@@ -5,6 +5,8 @@
  */
 package value;
 
+import java.awt.Dimension;
+
 /**
  *
  * @author PC
@@ -16,9 +18,16 @@ public class Global {
     public static final String ACTION_REGISTER = "register";
     public static final String ACTION_SHOW_WINDOW = "window";
     public static final String ACTION_NEW_USER = "newUser";
+    public static final String ACTION_NEW_OTHER_USER = "newOtherUser";
     public static final String ACTION_CLOSE_CONNECTION = "closeConnection";
     public static final String TEXT_USER_MAX_CONNECT = "Servidor Lleno";
     public static final String TEXT_MAX_CONNECTION_BY_USER = "No tienes permitido realizar mas conexiones a este servidor";
     public static final String ACTION_IP = "/ip";
+    public static final String ACTION_MOVE="/move";
+    public static final String ACTION_MOVE_RIVALS_PACKMAN="/moveRivals";
+    public static final String ACTION_SPAWN_COOKIE="/spawnCookie";
+    public static final String ACTION_EAT_COOKIE="/eatCookie";
+    public static final String ACTION_SCORE="/sendScore";
+    public static final Dimension DIMENCION=new Dimension(500, 500);
 
 }
