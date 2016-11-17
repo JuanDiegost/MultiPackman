@@ -25,12 +25,12 @@ public class Client extends Thread{
     private ObjectOutputStream tx;
     private ObjectInputStream rx;
     private String action;
-    private MainWindowServer window;
+    private MainWindowServer windows;
 
     public Client(String address) {
         try {
             this.socket=new Socket(address, Global.DEFAULT_PORT);
-            window=new MainWindowServer();
+            windows=new MainWindowServer();
             action="";
             try {
                 rx=new ObjectInputStream(socket.getInputStream());
@@ -58,13 +58,13 @@ public class Client extends Thread{
                 }
                 switch (action){
                     case Global.ACTION_SHOW_WINDOW:
-                        window.setModelName((DefaultListModel<String>) receiveObject());
-                        window.setModelIp((DefaultListModel<String>) receiveObject());
-                        window.setTitle("user");
+                        windows.setModelName((DefaultListModel<String>) receiveObject());
+                        windows.setModelIp((DefaultListModel<String>) receiveObject());
+                        windows.setTitle("user");
                         //windowServer.setVisible(true);
                         break;
                     case Global.ACTION_NEW_USER:
-                        window.addClient(receiveAction(), receiveAction());
+                        windows.addClient(receiveAction(), receiveAction());
                         break;
                 }
             } catch (IOException ex) {
