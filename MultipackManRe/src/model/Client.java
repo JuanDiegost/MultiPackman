@@ -26,6 +26,7 @@ public class Client extends Thread {
     private ObjectOutputStream tx;
     private ObjectInputStream rx;
     private String action;
+    
     private boolean working;
 
     public Client(String address) {
