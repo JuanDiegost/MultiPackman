@@ -27,12 +27,12 @@ public class Client extends Thread {
     private ObjectInputStream rx;
     private String action;
     
-    private boolean working;
+    private boolean work;
 
     public Client(String address) {
         try {
             this.socket = new Socket(address, Global.DEFAULT_PORT);
-            working = true;
+            work = true;
             action = "";
             configureConnection();
         } catch (IOException ex) {
@@ -70,7 +70,7 @@ public class Client extends Thread {
     @Override
     public void run() {
         super.run();
-        while (working) {
+        while (work) {
             move(3, 3);
             //if si se comio la galleta
             
@@ -93,7 +93,7 @@ public class Client extends Thread {
                         rx.close();
                         tx.close();
                         socket.close();
-                        working = false;
+                        work = false;
                         JOptionPane.showMessageDialog(null, message);
                         break;
                     case Global.ACTION_SPAWN_COOKIE:
