@@ -44,6 +44,8 @@ public final class JPanelButtons extends JPanel{
     this.setLayout(null);
     this.setBackground(Color.yellow);
     init();
+                 System.out.println("view.JPanelButtons.addjbLeft()");
+
     }
     
     public void init(){
@@ -88,11 +90,16 @@ public final class JPanelButtons extends JPanel{
 
     private void addjbLeft() {
      jbLeft=new JButton("4");
+             System.out.println("view.JPanelButtons.addjbLeft()");
+
      jbLeft.setBounds(0, 160, 100, 160);
+        System.out.println("view.JPanelButtons.addjbLeft()");
 //        this.jbLeft.setToolTipText("Guarda el delito en el maestro de crimenes");
         ImageIcon imageIcon = new ImageIcon("iconProyect/left.png");
         Icon icon = new ImageIcon(imageIcon.getImage().getScaledInstance(jbUp.getWidth(),jbUp.getHeight(), Image.SCALE_DEFAULT));
         this.repaint();
+        System.out.println("view.JPanelButtons.addjbLeft()");
+        System.out.println(icon.toString());
         jbLeft.setIcon(icon);
         jbLeft.setActionCommand(GlobalActionsAnimation.ACTION_LEFT);
         jbLeft.addActionListener(controllerButtons);
