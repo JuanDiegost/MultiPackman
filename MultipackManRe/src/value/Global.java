@@ -28,6 +28,7 @@ public class Global {
     public static final String ACTION_SPAWN_COOKIE="/spawnCookie";
     public static final String ACTION_EAT_COOKIE="/eatCookie";
     public static final String ACTION_SCORE="/sendScore";
+    public static final String ACTION_GET_POSITION="/getPosition";
     public static final Dimension DIMENCION=new Dimension(500, 500);
 
 }

@@ -21,13 +21,14 @@ import view.WindowClientGame;
  *
  * @author Juan Diego Molina
  */
-public class Client extends Thread {
+public class Client extends controller.ControllerButtons implements Runnable {
 
     private Socket socket;
     private ObjectOutputStream tx;
     private ObjectInputStream rx;
     private String action;
     private WindowClientGame game;
+    private Thread thread;
     
     private boolean work;
 
@@ -36,6 +37,7 @@ public class Client extends Thread {
             this.socket = new Socket(address, Global.DEFAULT_PORT);
             work = true;
             action = "";
+            thread=new Thread(this);
             configureConnection();
         } catch (IOException ex) {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
@@ -51,6 +53,7 @@ public class Client extends Thread {
         }
     }
     
+    @Override
     public void move(){
         try {
             sendString(Global.ACTION_MOVE);
@@ -65,12 +68,11 @@ public class Client extends Thread {
         rx = new ObjectInputStream(socket.getInputStream());
         tx = new ObjectOutputStream(socket.getOutputStream());
         tx.flush();
-        start();
+        thread.start();
     }
 
     @Override
     public void run() {
-        super.run();
         while (work) {
             //if si se comio la galleta
             
@@ -103,14 +105,18 @@ public class Client extends Thread {
                     case Global.ACTION_MOVE_RIVALS_PACKMAN:
                         int id=(int) receiveObject();
                         Point point=(Point) receiveObject();
+                        System.out.println(id+ " "+point.toString());
                         game.moveRivals(point, id);
-                        //se lo mandamos a la ventana
                         break;
                     case Global.ACTION_NEW_OTHER_USER:
                         //Optener id y nombre cliente
                         int idNewClient=(int) receiveObject();
                         String name=(String) receiveObject();
-                        game.addRival(name, idNewClient);
+                        //Point pointR=(Point) receiveObject();
+                        game.addRival(name, idNewClient,new Point(0, 0));
+                        break;
+                    case Global.ACTION_GET_POSITION:
+                        sendObject(game.getPositionPacman());
                         break;
                 }
             } catch (IOException ex) {
@@ -118,8 +124,7 @@ public class Client extends Thread {
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
             }
-                    move();
-
+            //move();
         }
     }
 
@@ -149,6 +154,8 @@ public class Client extends Thread {
             sendObject(name);
             sendObject(address.getHostAddress());
             this.game=new WindowClientGame(address.getHostAddress(), name, new Point(30, 50));
+            game.setController(this);
+            setjPanelGame(game.getjPanelGame());
             game.setVisible(true);
         } catch (IOException ex) {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);

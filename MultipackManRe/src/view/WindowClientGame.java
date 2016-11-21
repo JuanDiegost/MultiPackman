@@ -8,6 +8,7 @@ package view;
 import controller.ControllerButtons;
 import java.awt.Point;
 import javax.swing.JFrame;
+import model.Client;
 
 /**
  *
@@ -28,27 +29,30 @@ public class WindowClientGame extends JFrame {
         this.positionPacman = positionPacman;
         jPanelGame = new JPanelGame(ip, name, positionPacman);
         this.add(jPanelGame);
-        this.controllerButtons = new ControllerButtons(jPanelGame);
-        jPanelButtons = new JPanelButtons(controllerButtons);
-        this.add(jPanelButtons);
-        this.setTitle("GAME PACMAN");
+        //this.setTitle("GAME PACMAN");
         this.setSize(900, 550);
         this.setLayout(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
     }
+    
+    public void setController(ControllerButtons controllerButtons){
+        this.controllerButtons=controllerButtons;
+        jPanelButtons = new JPanelButtons(controllerButtons);
+        this.add(jPanelButtons);
+    }
+    
 
     public void init() {
 
     }
 
     public void moveRivals(Point point,int id) {
-        System.out.println(point.toString()+id);
         jPanelGame.movePackmanRival(point, id);
     }
     
-    public void addRival(String name,int id){
-        jPanelGame.addRival(id, name);
+    public void addRival(String name,int id,Point point){
+        jPanelGame.addRival(id, name,point);
     }
 
     public JPanelButtons getjPanelButtons() {

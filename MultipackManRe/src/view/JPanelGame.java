@@ -40,10 +40,10 @@ public class JPanelGame extends JPanel {
 
     }
 
-    public void addRival(int id, String name) {
+    public void addRival(int id, String name,Point point) {
         JButton newPackman = new JButton(name);
         newPackman.setName(id + "");
-        newPackman.setBounds(30, 50, (int) abstractPacman.getWidth(), (int) abstractPacman.getHeight());
+        newPackman.setBounds(point.x, point.y, (int) abstractPacman.getWidth(), (int) abstractPacman.getHeight());
         ImageIcon imageIcon = new ImageIcon("src/iconProyect/Pacman.png");
         Icon icon = new ImageIcon(imageIcon.getImage().getScaledInstance(jBuPacman.getWidth(), jBuPacman.getHeight(), Image.SCALE_DEFAULT));
         newPackman.setIcon(icon);
@@ -53,15 +53,16 @@ public class JPanelGame extends JPanel {
 //        jBuPacman.setEnabled(false);
         this.add(newPackman);
         arrayButtonsPacman.add(newPackman);
+        repaint();
     }
 
     public void movePackmanRival(Point point, int id) {
-        System.out.println("view.JPanelGame.movePackmanRival()");
         for (JButton jButton : arrayButtonsPacman) {
             if (jButton.getName().equals(id+"")) {
                 jButton.setBounds(point.x, point.y,(int) abstractPacman.getWidth(), (int) abstractPacman.getHeight());
             }
         }
+        repaint();
     }
 
     public Point getPositionPackman() {

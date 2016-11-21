@@ -25,7 +25,7 @@ public class Server extends Thread {
 
     private ServerSocket server;
     private MainWindowServer console;
-    private ArrayList<Connection> listConnections;
+    public static ArrayList<Connection> listConnections;
     public static final int CONNECTION_MAX_SERVER = 5;
     public static final int CONNECTION_MAX_USER = 2;
 
@@ -46,8 +46,7 @@ public class Server extends Thread {
             Socket socket = null;
             try {
                 socket = server.accept();
-                System.out.println("model.Server.run()");
-                Connection connection = new Connection(socket, console, listConnections);
+                Connection connection = new Connection(socket, console);
                 //connection.sendString(Global.ACTION_IP);
                 if (countConneccion < CONNECTION_MAX_SERVER) {
                     connection.connectionAccepted();
