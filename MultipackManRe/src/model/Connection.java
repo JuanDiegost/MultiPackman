@@ -55,7 +55,7 @@ public class Connection extends Thread {
         start();
     }
 
-    private void addScore(){
+    private void addScore() {
         score++;
         for (Connection listConnection : listConnections) {
             try {
@@ -66,17 +66,20 @@ public class Connection extends Thread {
             }
         }
     }
-    
+
     private void newUser() {
         for (Connection listConnection : listConnections) {
-            try {
-                listConnection.sendString(Global.ACTION_NEW_OTHER_USER);
-                listConnection.sendObject(id);
-                listConnection.sendObject(name);
-            } catch (IOException ex) {
-                Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
+            if (listConnection.getIdUser() != getIdUser()) {
+                try {
+                    listConnection.sendString(Global.ACTION_NEW_OTHER_USER);
+                    listConnection.sendObject(id);
+                    listConnection.sendObject(name);
+                } catch (IOException ex) {
+                    Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
+        listConnections.add(this);
     }
 
     public void maxNumberUserConnect() {
@@ -193,6 +196,10 @@ public class Connection extends Thread {
     public String getIp() {
         return ip;
     }
+    
+    public int getIdUser(){
+        return id;
+    }
 
     public void maxNumberConnectionByUser() {
         try {
@@ -207,16 +214,16 @@ public class Connection extends Thread {
     private void moveUser() {
         try {
             Point point = (Point) receiveObject();
-            System.out.println(point.toString());
-            System.out.println("vacio" + listConnections.isEmpty());
             for (Connection connection : listConnections) {
-                try {
-                    System.out.println("model.Connection.moveUser()");
-                    connection.sendString(Global.ACTION_MOVE_RIVALS_PACKMAN);
-                    connection.sendObject(id);
-                    connection.sendObject(point);
-                } catch (IOException ex) {
-                    Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
+                if (connection.getIdUser() != getIdUser()) {
+                    try {
+                        System.out.println("model.Connection.moveUser()------------");
+                        connection.sendString(Global.ACTION_MOVE_RIVALS_PACKMAN);
+                        connection.sendObject(id);
+                        connection.sendObject(point);
+                    } catch (IOException ex) {
+                        Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
             }
         } catch (IOException ex) {
@@ -224,6 +231,7 @@ public class Connection extends Thread {
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
         }
+
     }
 
     public Point generateCookie() {

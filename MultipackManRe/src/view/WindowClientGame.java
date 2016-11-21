@@ -14,30 +14,42 @@ import javax.swing.JFrame;
  * @author KAROL ALFONSO
  */
 public class WindowClientGame extends JFrame {
-private JPanelButtons jPanelButtons;
-private JPanelGame jPanelGame;
-private ControllerButtons controllerButtons;
-private Point positionPacman;
-private String ip;
-private String name;
+
+    private JPanelButtons jPanelButtons;
+    private JPanelGame jPanelGame;
+    private ControllerButtons controllerButtons;
+    private Point positionPacman;
+    private String ip;
+    private String name;
+
     public WindowClientGame(String ip, String name, Point positionPacman) {
-        this.ip=ip;
-        this.name=name;
-        this.positionPacman=positionPacman;
-      jPanelGame=new JPanelGame(ip,name,positionPacman);
+        this.ip = ip;
+        this.name = name;
+        this.positionPacman = positionPacman;
+        jPanelGame = new JPanelGame(ip, name, positionPacman);
         this.add(jPanelGame);
-        this.controllerButtons=new ControllerButtons(jPanelGame);
-       jPanelButtons= new JPanelButtons(controllerButtons);
+        this.controllerButtons = new ControllerButtons(jPanelGame);
+        jPanelButtons = new JPanelButtons(controllerButtons);
         this.add(jPanelButtons);
         this.setTitle("GAME PACMAN");
-        this.setSize(900,550);
+        this.setSize(900, 550);
         this.setLayout(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        
+
     }
-public void init(){
-     
-}
+
+    public void init() {
+
+    }
+
+    public void moveRivals(Point point,int id) {
+        System.out.println(point.toString()+id);
+        jPanelGame.movePackmanRival(point, id);
+    }
+    
+    public void addRival(String name,int id){
+        jPanelGame.addRival(id, name);
+    }
 
     public JPanelButtons getjPanelButtons() {
         return jPanelButtons;
@@ -64,7 +76,7 @@ public void init(){
     }
 
     public Point getPositionPacman() {
-        return positionPacman;
+        return jPanelGame.getPositionPackman();
     }
 
     public void setPositionPacman(Point positionPacman) {

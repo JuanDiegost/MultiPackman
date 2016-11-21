@@ -57,14 +57,12 @@ public abstract class AbstractPacman {
     public void makeMovementLeft(double space) {
         if (x_Pos > 0) {
             x_Pos -= space;
-            System.out.println("x" + x_Pos);
         }
     }
 
     public void makeMovementRight(double space) {
         if (x_Pos < limit_width) {
             x_Pos += space;
-            System.out.println("x" + x_Pos);
         }
     }
 
@@ -72,8 +70,6 @@ public abstract class AbstractPacman {
         if (y_Pos > 0 && x_Pos > 0) {
             y_Pos -= space;
             x_Pos -= space;
-            System.out.println("Y" + y_Pos);
-            System.out.println("x" + x_Pos);
         }
     }
 
@@ -81,8 +77,6 @@ public abstract class AbstractPacman {
         if (y_Pos > 0 && x_Pos < limit_width) {
             y_Pos -= space;
             x_Pos += space;
-            System.out.println("Y" + y_Pos);
-            System.out.println("x" + x_Pos);
         }
     }
 
@@ -90,8 +84,6 @@ public abstract class AbstractPacman {
         if (y_Pos < limit_heigth && x_Pos > 0) {
             y_Pos += space;
             x_Pos -= space;
-System.out.println("Y" + y_Pos);
-System.out.println("x" + x_Pos);
         }
     }
 
@@ -99,8 +91,6 @@ System.out.println("x" + x_Pos);
         if (y_Pos < limit_heigth && x_Pos < limit_width) {
             y_Pos += space;
             x_Pos += space;
-System.out.println("Y" + y_Pos);
-System.out.println("x" + x_Pos);
         }
     }
     
