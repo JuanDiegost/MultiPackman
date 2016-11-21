@@ -32,6 +32,7 @@ private String name;
         this.setTitle("GAME PACMAN");
         this.setSize(900,550);
         this.setLayout(null);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
         
     }
 public void init(){

@@ -44,7 +44,6 @@ public final class JPanelButtons extends JPanel{
     this.setLayout(null);
     this.setBackground(Color.yellow);
     init();
-                 System.out.println("view.JPanelButtons.addjbLeft()");
 
     }
     
@@ -65,7 +64,7 @@ public final class JPanelButtons extends JPanel{
     private void addjbUp() {
     jbUp=new JButton("8");
     jbUp.setBounds(100,0,100,160);
-    ImageIcon imageIcon = new ImageIcon("iconProyect/up.png");
+    ImageIcon imageIcon = new ImageIcon("src/iconProyect/up.png");
         Icon icon = new ImageIcon(imageIcon.getImage().getScaledInstance(jbUp.getWidth(),jbUp.getHeight(), Image.SCALE_DEFAULT));
         this.repaint();
         jbUp.setIcon(icon);
@@ -78,7 +77,7 @@ public final class JPanelButtons extends JPanel{
         jbDown=new JButton("2");
         jbDown.setBounds(100, 320, 100,160);
 //        this.jbDown.setToolTipText("Guarda el delito en el maestro de crimenes");
-        ImageIcon imageIcon = new ImageIcon("iconProyect/down.png");
+        ImageIcon imageIcon = new ImageIcon("src/iconProyect/down.png");
         Icon icon = new ImageIcon(imageIcon.getImage().getScaledInstance(jbUp.getWidth(),jbUp.getHeight(), Image.SCALE_DEFAULT));
         this.repaint();
         jbDown.setIcon(icon);
@@ -90,16 +89,11 @@ public final class JPanelButtons extends JPanel{
 
     private void addjbLeft() {
      jbLeft=new JButton("4");
-             System.out.println("view.JPanelButtons.addjbLeft()");
-
      jbLeft.setBounds(0, 160, 100, 160);
-        System.out.println("view.JPanelButtons.addjbLeft()");
 //        this.jbLeft.setToolTipText("Guarda el delito en el maestro de crimenes");
-        ImageIcon imageIcon = new ImageIcon("iconProyect/left.png");
+        ImageIcon imageIcon = new ImageIcon("src/iconProyect/right.png");
         Icon icon = new ImageIcon(imageIcon.getImage().getScaledInstance(jbUp.getWidth(),jbUp.getHeight(), Image.SCALE_DEFAULT));
         this.repaint();
-        System.out.println("view.JPanelButtons.addjbLeft()");
-        System.out.println(icon.toString());
         jbLeft.setIcon(icon);
         jbLeft.setActionCommand(GlobalActionsAnimation.ACTION_LEFT);
         jbLeft.addActionListener(controllerButtons);
@@ -111,7 +105,7 @@ public final class JPanelButtons extends JPanel{
     jbRight=new JButton("6");
     jbRight.setBounds(200, 160, 100, 160);
 //        this.jbRight.setToolTipText("Guarda el delito en el maestro de crimenes");
-        ImageIcon imageIcon = new ImageIcon("iconProyect/right.png");
+        ImageIcon imageIcon = new ImageIcon("src/iconProyect/left.png");
         Icon icon = new ImageIcon(imageIcon.getImage().getScaledInstance(jbUp.getWidth(),jbUp.getHeight(), Image.SCALE_DEFAULT));
         this.repaint();
         jbRight.setIcon(icon);
@@ -125,7 +119,7 @@ public final class JPanelButtons extends JPanel{
         jbDiagUPRight=new JButton("9");
         jbDiagUPRight.setBounds(200, 0, 100, 160);
 //        this.jbDiagUPRight.setToolTipText("Guarda el delito en el maestro de crimenes");
-        ImageIcon imageIcon = new ImageIcon("iconProyect/diag_up_right.png");
+        ImageIcon imageIcon = new ImageIcon("src/iconProyect/diag_up_right.png");
         Icon icon = new ImageIcon(imageIcon.getImage().getScaledInstance(jbUp.getWidth(),jbUp.getHeight(), Image.SCALE_DEFAULT));
         this.repaint();
         jbDiagUPRight.setIcon(icon);
@@ -139,7 +133,7 @@ public final class JPanelButtons extends JPanel{
     jbDiagUPLeft=new JButton("");
     jbDiagUPLeft.setBounds(0, 0, 100, 160);
 //        this.jbDiagUPLeft.setToolTipText("Guarda el delito en el maestro de crimenes");
-        ImageIcon imageIcon = new ImageIcon("iconProyect/diag_up_left.png");
+        ImageIcon imageIcon = new ImageIcon("src/iconProyect/diag_up_left.png");
         Icon icon = new ImageIcon(imageIcon.getImage().getScaledInstance(jbUp.getWidth(),jbUp.getHeight(), Image.SCALE_DEFAULT));
         this.repaint();
         jbDiagUPLeft.setIcon(icon);
@@ -153,7 +147,7 @@ public final class JPanelButtons extends JPanel{
     jbDiagDownRight=new JButton("3");
     jbDiagDownRight.setBounds(200,320, 100, 160);
 
-        ImageIcon imageIcon = new ImageIcon("iconProyect/diag_down_right.png");
+        ImageIcon imageIcon = new ImageIcon("src/iconProyect/diag_down_right.png");
         Icon icon = new ImageIcon(imageIcon.getImage().getScaledInstance(jbUp.getWidth(),jbUp.getHeight(), Image.SCALE_DEFAULT));
         this.repaint();
         jbDiagDownRight.setIcon(icon);
@@ -166,7 +160,7 @@ public final class JPanelButtons extends JPanel{
     private void addjbDiagDownLeft() {
         jbDiagDownLeft=new JButton("1"); 
        jbDiagDownLeft.setBounds(0, 320, 100, 160);
-        ImageIcon imageIcon = new ImageIcon("iconProyect/diag_down_left.png");
+        ImageIcon imageIcon = new ImageIcon("src/iconProyect/diag_down_left.png");
         Icon icon = new ImageIcon(imageIcon.getImage().getScaledInstance(jbUp.getWidth(),jbUp.getHeight(), Image.SCALE_DEFAULT));
         this.repaint();
         jbDiagDownLeft.setIcon(icon);

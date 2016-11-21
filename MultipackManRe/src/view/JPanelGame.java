@@ -41,10 +41,12 @@ public class JPanelGame extends JPanel {
     }
 
     public void drawButtonPacman() {
-        ImageIcon imageIcon = new ImageIcon("iconProyect/Pacman.png");
+        jBuPacman=new JButton("");
+                jBuPacman.setBounds((int) abstractPacman.getX_Pos(), (int) abstractPacman.getY_Pos(), (int) abstractPacman.getWidth(), (int) abstractPacman.getHeight());
+
+        ImageIcon imageIcon = new ImageIcon("src/iconProyect/Pacman.png");
         Icon icon = new ImageIcon(imageIcon.getImage().getScaledInstance(jBuPacman.getWidth(), jBuPacman.getHeight(), Image.SCALE_DEFAULT));
-        jBuPacman=new JButton(icon);
-        jBuPacman.setBounds((int) abstractPacman.getX_Pos(), (int) abstractPacman.getY_Pos(), (int) abstractPacman.getWidth(), (int) abstractPacman.getHeight());
+                jBuPacman.setIcon(icon);
 
         this.repaint();
 //        Image img = new ImageIcon("iconProyect/Pacman.png").getImage().getScaledInstance( 200, -12, java.awt.Image.SCALE_AREA_AVERAGING);
