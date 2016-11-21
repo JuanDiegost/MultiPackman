@@ -34,6 +34,8 @@ public final class JPanelButtons extends JPanel{
     
     public JPanelButtons(ControllerButtons controllerButtons) {
     this.controllerButtons=controllerButtons;
+            System.out.println("view.JPanelButtons.addjbRight()");
+
 //       this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 //        SpringLayout layout = new SpringLayout();
 //        this.setLayout(layout);
@@ -106,6 +108,7 @@ public final class JPanelButtons extends JPanel{
     jbRight.setBounds(200, 160, 100, 160);
 //        this.jbRight.setToolTipText("Guarda el delito en el maestro de crimenes");
         ImageIcon imageIcon = new ImageIcon("src/iconProyect/left.png");
+        System.out.println("view.JPanelButtons.addjbRight()");
         Icon icon = new ImageIcon(imageIcon.getImage().getScaledInstance(jbUp.getWidth(),jbUp.getHeight(), Image.SCALE_DEFAULT));
         this.repaint();
         jbRight.setIcon(icon);
