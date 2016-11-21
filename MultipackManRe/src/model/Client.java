@@ -15,6 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import value.Global;
+import view.WindowClientGame;
 
 /**
  *
@@ -26,6 +27,7 @@ public class Client extends Thread {
     private ObjectOutputStream tx;
     private ObjectInputStream rx;
     private String action;
+    private WindowClientGame game;
     
     private boolean work;
 
@@ -49,11 +51,10 @@ public class Client extends Thread {
         }
     }
     
-    public void move(int o,int p){
+    public void move(){
         try {
-            Point point=new Point(p, o);
             sendString(Global.ACTION_MOVE);
-            sendObject(point);
+            sendObject(game.getPositionPacman());
         } catch (IOException ex) {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -71,7 +72,6 @@ public class Client extends Thread {
     public void run() {
         super.run();
         while (work) {
-            move(3, 3);
             //if si se comio la galleta
             
             try {
@@ -103,13 +103,14 @@ public class Client extends Thread {
                     case Global.ACTION_MOVE_RIVALS_PACKMAN:
                         int id=(int) receiveObject();
                         Point point=(Point) receiveObject();
-                        System.out.println("id"+id+"pocicion: "+point.toString());
+                        game.moveRivals(point, id);
                         //se lo mandamos a la ventana
                         break;
                     case Global.ACTION_NEW_OTHER_USER:
                         //Optener id y nombre cliente
                         int idNewClient=(int) receiveObject();
                         String name=(String) receiveObject();
+                        game.addRival(name, idNewClient);
                         break;
                 }
             } catch (IOException ex) {
@@ -117,6 +118,8 @@ public class Client extends Thread {
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
             }
+                    move();
+
         }
     }
 
@@ -145,6 +148,8 @@ public class Client extends Thread {
             sendString(Global.ACTION_REGISTER);
             sendObject(name);
             sendObject(address.getHostAddress());
+            this.game=new WindowClientGame(address.getHostAddress(), name, new Point(30, 50));
+            game.setVisible(true);
         } catch (IOException ex) {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         }

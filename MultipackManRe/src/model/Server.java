@@ -51,9 +51,8 @@ public class Server extends Thread {
                 //connection.sendString(Global.ACTION_IP);
                 if (countConneccion < CONNECTION_MAX_SERVER) {
                     connection.connectionAccepted();
-                    listConnections.add(connection);
                     countConneccion++;
-                    System.out.println(connection.getIp());
+                    System.out.println(connection.getIdUser());
                 } else {
                     connection.maxNumberUserConnect();
                 }

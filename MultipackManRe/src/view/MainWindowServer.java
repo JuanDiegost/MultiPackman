@@ -25,6 +25,7 @@ public class MainWindowServer extends javax.swing.JFrame {
         modelIp=new DefaultListModel<>();
         jList2.setModel(modelName );
         jList1.setModel(modelIp);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 
     public DefaultListModel<String> getModelName() {
