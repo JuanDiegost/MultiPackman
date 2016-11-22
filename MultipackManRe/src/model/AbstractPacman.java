@@ -50,7 +50,6 @@ public abstract class AbstractPacman {
 
         if (y_Pos < limit_heigth) {
             y_Pos += space;
-            System.out.println("Y" + y_Pos);
         }
     }
 

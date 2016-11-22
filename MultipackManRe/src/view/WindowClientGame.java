@@ -51,8 +51,12 @@ public class WindowClientGame extends JFrame {
         jPanelGame.movePackmanRival(point, id);
     }
     
-    public void addRival(String name,int id,Point point){
-        jPanelGame.addRival(id, name,point);
+    public void setScore(int score){
+        jPanelGame.setScore(score);
+    }
+    
+    public void addRival(String name,int id,Point point,int score){
+        jPanelGame.addRival(id, name,point,score);
     }
 
     public JPanelButtons getjPanelButtons() {

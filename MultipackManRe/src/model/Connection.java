@@ -65,6 +65,10 @@ public class Connection extends Thread {
         }
     }
 
+    public int getScore() {
+        return score;
+    }
+
     private void newUser() {
         for (Connection listConnection : Server.listConnections) {
             if (listConnection.getIdUser() != getIdUser()) {
@@ -72,9 +76,11 @@ public class Connection extends Thread {
                     listConnection.sendString(Global.ACTION_NEW_OTHER_USER);
                     listConnection.sendObject(id);
                     listConnection.sendObject(name);
+                    listConnection.sendObject(score);
                     sendString(Global.ACTION_NEW_OTHER_USER);
                     sendObject(listConnection.getIdUser());
-                    sendObject(listConnection.getName());
+                    sendObject(listConnection.getNameUser());
+                    sendObject(listConnection.getScore());
                 } catch (IOException ex) {
                     Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
                 }

@@ -29,6 +29,7 @@ public class Client extends controller.ControllerButtons implements Runnable {
     private String action;
     private WindowClientGame game;
     private Thread thread;
+    private int score;
     
     private boolean work;
 
@@ -37,6 +38,7 @@ public class Client extends controller.ControllerButtons implements Runnable {
             this.socket = new Socket(address, Global.DEFAULT_PORT);
             work = true;
             action = "";
+            score=0;
             thread=new Thread(this);
             configureConnection();
         } catch (IOException ex) {
@@ -105,18 +107,21 @@ public class Client extends controller.ControllerButtons implements Runnable {
                     case Global.ACTION_MOVE_RIVALS_PACKMAN:
                         int id=(int) receiveObject();
                         Point point=(Point) receiveObject();
-                        System.out.println(id+ " "+point.toString());
                         game.moveRivals(point, id);
                         break;
                     case Global.ACTION_NEW_OTHER_USER:
                         //Optener id y nombre cliente
                         int idNewClient=(int) receiveObject();
                         String name=(String) receiveObject();
+                        int score=(int)receiveObject();
                         //Point pointR=(Point) receiveObject();
-                        game.addRival(name, idNewClient,new Point(0, 0));
+                        game.addRival(name, idNewClient,new Point(30, 50),score);
                         break;
                     case Global.ACTION_GET_POSITION:
                         sendObject(game.getPositionPacman());
+                        break;
+                    case Global.ACTION_GET_SCORE:
+                        sendObject(this.score);
                         break;
                 }
             } catch (IOException ex) {

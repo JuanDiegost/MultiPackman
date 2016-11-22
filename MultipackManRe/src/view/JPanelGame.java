@@ -5,12 +5,9 @@
  */
 package view;
 
-import java.awt.Image;
+import java.awt.Color;
 import java.awt.Point;
 import java.util.ArrayList;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
@@ -25,8 +22,8 @@ import model.Pacman;
 public class JPanelGame extends JPanel {
 
     private AbstractPacman abstractPacman;
-    private JButton jBuPacman;
-    private ArrayList<JButton> arrayButtonsPacman;
+    private PackManConponent jBuPacman;
+    private ArrayList<PackManConponent> arrayButtonsPacman;
 
     public JPanelGame(String ip, String name, Point pointPacman) {
         abstractPacman = new Pacman(ip, name, pointPacman);
@@ -35,19 +32,14 @@ public class JPanelGame extends JPanel {
         this.setBorder(bordejpanel);
         this.setSize(500, 550);
         arrayButtonsPacman = new ArrayList<>();
-        drawButtonPacman();
+        drawButtonPacman(name);
 //        this.setBackground(Color.blue);
 
     }
 
-    public void addRival(int id, String name,Point point) {
-        JButton newPackman = new JButton(name);
-        newPackman.setName(id + "");
+    public void addRival(int id, String name,Point point,int score) {
+        PackManConponent newPackman = new PackManConponent(name, id, score, Color.yellow);
         newPackman.setBounds(point.x, point.y, (int) abstractPacman.getWidth(), (int) abstractPacman.getHeight());
-        ImageIcon imageIcon = new ImageIcon("src/iconProyect/Pacman.png");
-        Icon icon = new ImageIcon(imageIcon.getImage().getScaledInstance(jBuPacman.getWidth(), jBuPacman.getHeight(), Image.SCALE_DEFAULT));
-        newPackman.setIcon(icon);
-        newPackman.setBorder(null);
         newPackman.setBorder(null);
         newPackman.setContentAreaFilled(false);
 //        jBuPacman.setEnabled(false);
@@ -57,9 +49,10 @@ public class JPanelGame extends JPanel {
     }
 
     public void movePackmanRival(Point point, int id) {
-        for (JButton jButton : arrayButtonsPacman) {
-            if (jButton.getName().equals(id+"")) {
-                jButton.setBounds(point.x, point.y,(int) abstractPacman.getWidth(), (int) abstractPacman.getHeight());
+        for (PackManConponent packManConponent : arrayButtonsPacman) {
+            if (packManConponent.getId()==id) {
+                packManConponent.setBounds(point.x, point.y,(int) abstractPacman.getWidth(), (int) abstractPacman.getHeight());
+                return;
             }
         }
         repaint();
@@ -68,18 +61,16 @@ public class JPanelGame extends JPanel {
     public Point getPositionPackman() {
         return new Point((int) abstractPacman.getX_Pos(), (int) abstractPacman.getY_Pos());
     }
+    
+    public void setScore(int score){
+        jBuPacman.setScore(score);
+    }
 
-    public void drawButtonPacman() {
-        jBuPacman = new JButton("");
+    public void drawButtonPacman(String name) {
+        jBuPacman = new PackManConponent(name, 0, 0, Color.yellow);
+        
         jBuPacman.setBounds((int) abstractPacman.getX_Pos(), (int) abstractPacman.getY_Pos(), (int) abstractPacman.getWidth(), (int) abstractPacman.getHeight());
 
-        ImageIcon imageIcon = new ImageIcon("src/iconProyect/Pacman.png");
-        Icon icon = new ImageIcon(imageIcon.getImage().getScaledInstance(jBuPacman.getWidth(), jBuPacman.getHeight(), Image.SCALE_DEFAULT));
-        jBuPacman.setIcon(icon);
-        jBuPacman.setName("I");
-        this.repaint();
-//        Image img = new ImageIcon("iconProyect/Pacman.png").getImage().getScaledInstance( 200, -12, java.awt.Image.SCALE_AREA_AVERAGING);
-//	JButton btn = new JButton(new ImageIcon(img));
         jBuPacman.setBorder(null);
         jBuPacman.setContentAreaFilled(false);
 //        jBuPacman.setEnabled(false);
@@ -88,14 +79,15 @@ public class JPanelGame extends JPanel {
 
     public void moveUp() {
         abstractPacman.makeMovementUP(10);
+        jBuPacman.moveUp();
         jBuPacman.setBounds((int) abstractPacman.getX_Pos(), (int) abstractPacman.getY_Pos(),
                 (int) abstractPacman.getWidth(), (int) abstractPacman.getHeight());
-        System.out.println("aquiiii");
         repaint();
     }
 
     public void moveDown() {
         abstractPacman.makeMovementDown(5);
+        jBuPacman.moveDown();
         jBuPacman.setBounds((int) abstractPacman.getX_Pos(), (int) abstractPacman.getY_Pos(),
                 (int) abstractPacman.getWidth(), (int) abstractPacman.getHeight());
         repaint();
