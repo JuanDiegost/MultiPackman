@@ -61,7 +61,7 @@ public class Connection extends Thread {
         for (Connection listConnection : Server.listConnections) {
             try {
                 listConnection.sendString(Global.ACTION_SCORE);
-                listConnection.sendObject(id);
+                listConnection.sendObject(getIdUser());
                 listConnection.sendObject(score);
             } catch (IOException ex) {
                 Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
@@ -85,6 +85,7 @@ public class Connection extends Thread {
         for (Connection connection : Server.listConnections) {
             if (connection.getIdUser() != getIdUser()) {
                 try {
+                    System.out.println(id+"  "+connection.getIdUser());
                     connection.sendString(Global.ACTION_NEW_OTHER_USER);
                     connection.sendObject(id);
                     connection.sendObject(name);
@@ -248,7 +249,6 @@ public class Connection extends Thread {
         try {
             point = (Point) receiveObject();
             for (Connection connection : Server.listConnections) {
-                System.out.println("De " + name + " a " + connection.getNameUser() + " " + point.toString());
                 try {
                     connection.sendString(Global.ACTION_MOVE_RIVALS_PACKMAN);
                     connection.sendObject(getIdUser());

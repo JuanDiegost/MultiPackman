@@ -53,6 +53,7 @@ public class JPanelGame extends JPanel {
  * @param name
  * @param point
  * @param score 
+     * @param color 
  */
     public void addRival(int id, String name,Point point,int score,Color color) {
         PackManConponent newPackman = new PackManConponent(name, id, score, color);

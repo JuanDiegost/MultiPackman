@@ -5,7 +5,6 @@
  */
 package view;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -13,10 +12,6 @@ import java.awt.RenderingHints;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JDialog;
-import javax.swing.border.Border;
-import sun.reflect.generics.tree.Tree;
 
 /**
  *
