@@ -7,6 +7,8 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import value.GlobalActionsAnimation;
 import view.JPanelGame;
 
@@ -14,7 +16,7 @@ import view.JPanelGame;
  *
  * @author KAROL ALFONSO
  */
-public abstract class ControllerButtons implements ActionListener {
+public abstract class ControllerButtons implements ActionListener{
 private JPanelGame jPanelGame;
 
     public void setjPanelGame(JPanelGame jPanelGame) {

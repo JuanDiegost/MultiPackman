@@ -5,6 +5,7 @@
  */
 package view;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -12,7 +13,9 @@ import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 /**
  *
@@ -217,11 +220,41 @@ public class SinglePacman extends JButton implements KeyListener {
     }
 
     @Override
+    public int getX() {
+        return x; //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public int getY() {
+        return y; //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public int getZ() {
+        return z;
+    }
+    
+    @Override
     public void keyTyped(KeyEvent e) {
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
+    }
+    
+    public static void main(String[] args) {
+        SinglePacman singlePacman = new SinglePacman("localhost", "pedro", new Point(60, 60), true, Color.yellow);
+        JFrame jFrame = new JFrame();
+        jFrame.setSize(500, 500);
+        jFrame.setLayout(new BorderLayout());
+        JPanel panel = new JPanel();
+        jFrame.add(panel,BorderLayout.CENTER);
+        panel.setLayout(null);
+        panel.add(singlePacman);
+        
+        System.out.println("coordenadasX: "+singlePacman.getLocation().x);
+        System.out.println("coordenadasY: "+singlePacman.getY());
+        System.out.println("coordenadasZ: "+singlePacman.getZ());
+        jFrame.setVisible(true);
     }
 
 }

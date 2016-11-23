@@ -7,6 +7,7 @@ package model;
 
 import java.awt.Color;
 import java.awt.Point;
+import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
