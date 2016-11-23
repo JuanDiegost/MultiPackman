@@ -57,7 +57,6 @@ public class Server extends Thread {
                 }else{
                     for(IpData data : datas) {
                         if (data.existsHere(connection.getIp())) {
-                            System.out.println("llll");
                             if (data.getNumberOfConettion()< CONNECTION_MAX_USER) {
                                 data.compareHere();                                
                             }else{
@@ -69,7 +68,6 @@ public class Server extends Thread {
                 if (countConneccion < CONNECTION_MAX_SERVER) {
                     connection.connectionAccepted();
                     countConneccion++;
-                    System.out.println(connection.getIdUser());
                 } else {
                     connection.maxNumberUserConnect();
                 }
@@ -80,7 +78,6 @@ public class Server extends Thread {
     }
 
     private void messageInit() {
-        System.out.println("Servidor List");
         try {
             InetAddress address = InetAddress.getLocalHost();
             System.out.println("IP SERVIDOR: " + address.getHostAddress());

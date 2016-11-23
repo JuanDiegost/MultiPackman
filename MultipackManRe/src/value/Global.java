@@ -31,6 +31,6 @@ public class Global {
     public static final String ACTION_GET_POSITION="/getPosition";
     public static final String ACTION_GET_SCORE="/getScore";
     public static final String ACTION_CLOSE_CONNECTION_BY_USER="/closeConnectionByUser";
-    public static final Dimension DIMENSION=new Dimension(500, 500);
+    public static final Dimension DIMENSION=new Dimension(400, 400);
 
 }
