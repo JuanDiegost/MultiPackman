@@ -187,7 +187,7 @@ public class Client extends controller.ControllerButtons implements Runnable {
             Point pointCookie=(Point) receiveObject();
             int id=(int) receiveObject();
             System.out.println("model.Client.register()");
-            this.game = new WindowClientGame(id,address.getHostAddress(), name, new Point(30, 50),pointCookie,color);
+            this.game = new WindowClientGame(0,address.getHostAddress(), name, new Point(30, 50),pointCookie,color);
             game.setController(this);
             setjPanelGame(game.getjPanelGame());
             game.setVisible(true);

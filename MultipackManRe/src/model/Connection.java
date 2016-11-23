@@ -135,7 +135,7 @@ public class Connection extends Thread {
         for (Connection connection : Server.listConnections) {
             try {
                 connection.sendString(Global.ACTION_CLOSE_CONNECTION_BY_USER);
-                connection.sendObject(id);
+                connection.sendObject(getIdUser());
             } catch (IOException ex) {
                 Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
             }

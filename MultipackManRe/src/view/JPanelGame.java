@@ -122,11 +122,10 @@ public class JPanelGame extends JPanel {
     }
 
     public void removePacman(int idPacman) {
-
         for (PackManConponent pacman : arrayButtonsPacman) {
             if (pacman.getId() == idPacman) {
                 arrayButtonsPacman.remove(pacman);
-                this.remove(jBuPacman);
+                this.remove(pacman);
                 this.repaint();
             }
         }

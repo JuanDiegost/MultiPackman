@@ -44,7 +44,6 @@ public abstract class AbstractPacman {
     public void makeMovementUP(double space) {
         if (y_Pos > 0) {
             y_Pos -= space;
-            System.out.println("Y" + y_Pos);
         }
     }
 
