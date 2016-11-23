@@ -26,6 +26,7 @@ public class Server extends Thread {
     private ServerSocket server;
     private MainWindowServer console;
     public static ArrayList<Connection> listConnections;
+    public ArrayList<IpData> datas;
     public static final int CONNECTION_MAX_SERVER = 5;
     public static final int CONNECTION_MAX_USER = 2;
 
@@ -33,6 +34,7 @@ public class Server extends Thread {
         this.server = new ServerSocket(Global.DEFAULT_PORT);
         console = new MainWindowServer();
         listConnections = new ArrayList<>();
+        datas  = new ArrayList<>();
         console.setVisible(true);
         start();
     }
@@ -48,6 +50,20 @@ public class Server extends Thread {
                 socket = server.accept();
                 Connection connection = new Connection(socket, console);
                 //connection.sendString(Global.ACTION_IP);
+                if (datas.isEmpty()) {
+                    datas.add(new IpData(connection.getIp()));
+                }else{
+                    for(IpData data : datas) {
+                        if (data.existsHere(connection.getIp())) {
+                            System.out.println("llll");
+                            if (data.getNumberOfConettion()<= CONNECTION_MAX_USER) {
+                                data.compareHere();                                
+                            }else{
+                                connection.maxNumberConnectionByUser();
+                            }
+                        }
+                    }
+                }
                 if (countConneccion < CONNECTION_MAX_SERVER) {
                     connection.connectionAccepted();
                     countConneccion++;
