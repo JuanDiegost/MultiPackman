@@ -69,6 +69,10 @@ public class PackManConponent extends JButton implements Runnable {
     public int getId() {
         return id;
     }
+    
+    public void addScore(){
+        score++;
+    }
 
     public void setScore(int score) {
         this.score = score;

@@ -167,6 +167,7 @@ public class Connection extends Thread {
                         }
                         System.out.println("Not Nullllll");
                         sendObject(Server.pointCookie);
+                        sendObject(getIdUser());
                         mainWindowServer.addClient(ip, id + "." + name);
                         newUser();
                         //sendAll(name, ip);

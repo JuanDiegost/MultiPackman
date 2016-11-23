@@ -170,11 +170,11 @@ public class Client extends controller.ControllerButtons implements Runnable {
             selectColorUser = new SelectColorUser();
             String name = JOptionPane.showInputDialog("Por favor escriba Su nombre: ");
             selectColorUser.setVisible(true);
-            Color color = Color.BLUE;
-            //while (color == null) {                
-              //  color=selectColorUser.getColor();
-               // System.out.println();
-            //}
+            Color color = null;
+            while (color == null) {                
+               color=selectColorUser.getColor();
+               System.out.println();
+            }
             selectColorUser.setVisible(false);
             sendString(Global.ACTION_REGISTER);
             sendObject(name);
@@ -183,8 +183,9 @@ public class Client extends controller.ControllerButtons implements Runnable {
             sendObject(color);
             System.out.println("model.Client.register()");
             Point pointCookie=(Point) receiveObject();
+            int id=(int) receiveObject();
             System.out.println("model.Client.register()");
-            this.game = new WindowClientGame(address.getHostAddress(), name, new Point(30, 50),pointCookie,color);
+            this.game = new WindowClientGame(id,address.getHostAddress(), name, new Point(30, 50),pointCookie,color);
             game.setController(this);
             setjPanelGame(game.getjPanelGame());
             game.setVisible(true);

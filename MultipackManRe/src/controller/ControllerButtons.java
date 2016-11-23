@@ -63,6 +63,7 @@ public abstract class ControllerButtons implements ActionListener {
         }
         if (jPanelGame.getAbstractPacman().isEatCookie(jPanelGame.getJbuCookie())) {
             eat();
+            jPanelGame.addScore();
         }
     }
 
@@ -104,6 +105,7 @@ public abstract class ControllerButtons implements ActionListener {
        
         if (jPanelGame.getAbstractPacman().isEatCookie(jPanelGame.getJbuCookie())) {
             eat();
+            jPanelGame.addScore();
         }
     }
 }

@@ -35,7 +35,7 @@ public class JPanelGame extends JPanel {
     private ArrayList<PackManConponent> arrayButtonsPacman;
 //------------------------------Constructor------------------------------//
 
-    public JPanelGame(String ip, String name, Point pointPacman, Point pointCookie, Color color) {
+    public JPanelGame(String ip, int id,String name, Point pointPacman, Point pointCookie, Color color) {
         abstractPacman = new Pacman(ip, name, pointPacman);
         cookie = new Cookie(pointCookie);
         this.setLayout(null);
@@ -43,7 +43,7 @@ public class JPanelGame extends JPanel {
         this.setBorder(bordejpanel);
         this.setSize(500, 550);
         arrayButtonsPacman = new ArrayList<>();
-        drawButtonPacman(name, color);
+        drawButtonPacman(id,name, color);
         drawButtonCookie(pointCookie);
 //        this.setBackground(Color.blue);
 
@@ -86,9 +86,13 @@ public class JPanelGame extends JPanel {
     public void setScore(int score) {
         jBuPacman.setScore(score);
     }
+    
+    public void addScore(){
+        jBuPacman.addScore();
+    }
 
-    public void drawButtonPacman(String name, Color color) {
-        jBuPacman = new PackManConponent(name, 0, 0, color);
+    public void drawButtonPacman(int id,String name, Color color) {
+        jBuPacman = new PackManConponent(name, id, 0, color);
         jBuPacman.setBounds((int) abstractPacman.getX_Pos(), (int) abstractPacman.getY_Pos(), (int) abstractPacman.getWidth(), (int) abstractPacman.getHeight());
         jBuPacman.setBorder(null);
         jBuPacman.setContentAreaFilled(false);
