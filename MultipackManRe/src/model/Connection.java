@@ -50,23 +50,9 @@ public class Connection extends Thread {
             rx = new ObjectInputStream(socket.getInputStream());
 
         } catch (IOException ex) {
-            Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
         }
         this.ip = socket.getInetAddress().getHostAddress();
         start();
-    }
-
-    private void addScore() {
-        score++;
-        for (Connection listConnection : Server.listConnections) {
-            try {
-                listConnection.sendString(Global.ACTION_SCORE);
-                listConnection.sendObject(getIdUser());
-                listConnection.sendObject(score);
-            } catch (IOException ex) {
-                Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
     }
 
     public int getScore() {
@@ -85,7 +71,7 @@ public class Connection extends Thread {
         for (Connection connection : Server.listConnections) {
             if (connection.getIdUser() != getIdUser()) {
                 try {
-                    System.out.println(id+"  "+connection.getIdUser());
+                    System.out.println(id + "  " + connection.getIdUser());
                     connection.sendString(Global.ACTION_NEW_OTHER_USER);
                     connection.sendObject(id);
                     connection.sendObject(name);
@@ -99,7 +85,6 @@ public class Connection extends Thread {
                     sendObject(connection.getPoint());
                     sendObject(connection.getColor());//enviar color del listConnection
                 } catch (IOException ex) {
-                    Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }
@@ -112,7 +97,6 @@ public class Connection extends Thread {
             sendString(Global.TEXT_USER_MAX_CONNECT);
             closeConnection();
         } catch (IOException ex) {
-            Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -127,7 +111,6 @@ public class Connection extends Thread {
         try {
             sendString(Global.ACTION_NEW_USER);
         } catch (IOException ex) {
-            Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -137,7 +120,6 @@ public class Connection extends Thread {
                 connection.sendString(Global.ACTION_CLOSE_CONNECTION_BY_USER);
                 connection.sendObject(getIdUser());
             } catch (IOException ex) {
-                Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
@@ -175,14 +157,12 @@ public class Connection extends Thread {
                         moveUser();
                         break;
                     case Global.ACTION_EAT_COOKIE:
+                        System.out.println(id + " Accion comi");
                         userEatCookie();
-                        addScore();
                         break;
                 }
             } catch (IOException ex) {
-                Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ClassNotFoundException ex) {
-                Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
@@ -193,7 +173,6 @@ public class Connection extends Thread {
             sendObject(mainWindowServer.getModelName());
             sendObject(mainWindowServer.getModelIp());
         } catch (IOException ex) {
-            Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -239,14 +218,13 @@ public class Connection extends Thread {
             sendString(Global.TEXT_MAX_CONNECTION_BY_USER);
             closeConnection();
         } catch (IOException ex) {
-            Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     private void moveUser() {
         try {
             point = (Point) receiveObject();
-            char d=(char) receiveObject();
+            char d = (char) receiveObject();
             for (Connection connection : Server.listConnections) {
                 try {
                     connection.sendString(Global.ACTION_MOVE_RIVALS_PACKMAN);
@@ -254,13 +232,10 @@ public class Connection extends Thread {
                     connection.sendObject(point);
                     connection.sendObject(d);
                 } catch (IOException ex) {
-                    Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         } catch (IOException ex) {
-            Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
@@ -275,12 +250,16 @@ public class Connection extends Thread {
 
     private void userEatCookie() {
         Server.pointCookie = generateCookie();
+        score++;
+        System.out.println(id + " enviar Comfddf");
         for (Connection connection : Server.listConnections) {
             try {
                 connection.sendString(Global.ACTION_SPAWN_COOKIE);
                 connection.sendObject(Server.pointCookie);
+                connection.sendString(Global.ACTION_SCORE);
+                connection.sendObject(getIdUser());
+                connection.sendObject(score);
             } catch (IOException ex) {
-                Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }

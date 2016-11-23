@@ -117,7 +117,7 @@ public class JPanelGame extends JPanel {
         this.repaint();
         jbuCookie.setIcon(icon);
         jbuCookie.setBackground(this.getBackground());
-        jbuCookie.setContentAreaFilled(false);
+        //jbuCookie.setContentAreaFilled(false);
         this.add(jbuCookie);
     }
 
