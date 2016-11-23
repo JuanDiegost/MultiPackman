@@ -146,7 +146,6 @@ public class Connection extends Thread {
     public void run() {
         super.run();
         while (working) {
-            System.out.println("model.Connection.run()");
             try {
                 try {
                     action = receiveAction();

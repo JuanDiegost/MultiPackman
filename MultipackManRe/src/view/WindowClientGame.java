@@ -94,7 +94,7 @@ public class WindowClientGame extends JFrame {
     }
 
     public void drawnCookie(Point point) {
-        jPanelGame.drawButtonCookie(point);
+        jPanelGame.setPositionCookie(point);
     }
 
     public JPanelButtons getjPanelButtons() {

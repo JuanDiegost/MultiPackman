@@ -96,6 +96,11 @@ public class JPanelGame extends JPanel {
         this.add(jBuPacman);
     }
 
+    public void setPositionCookie(Point positionCookie) {
+        jbuCookie.setBounds((int) positionCookie.getX(), (int) positionCookie.getY(), (int) cookie.getWidth(), (int) cookie.getHeight());
+
+    }
+
     public void drawButtonCookie(Point positionCookie) {
         jbuCookie = new JButton();
         jbuCookie.setBounds((int) positionCookie.getX(), (int) positionCookie.getY(), (int) cookie.getWidth(), (int) cookie.getHeight());

@@ -79,7 +79,6 @@ public class Client extends controller.ControllerButtons implements Runnable {
     @Override
     public void run() {
         while (work) {
-            //if si se comio la galleta
 
             try {
                 try {
@@ -192,6 +191,15 @@ public class Client extends controller.ControllerButtons implements Runnable {
         } catch (IOException ex) {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @Override
+    public void eat() {
+        try {
+            sendString(Global.ACTION_EAT_COOKIE);
+        } catch (IOException ex) {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

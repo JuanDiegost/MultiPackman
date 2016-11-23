@@ -23,6 +23,7 @@ public abstract class ControllerButtons implements ActionListener {
     }
 
     public abstract void move();
+    public abstract void eat();
 
     @Override
     public void actionPerformed(ActionEvent ae) {
@@ -60,16 +61,8 @@ public abstract class ControllerButtons implements ActionListener {
                 move();
                 break;
         }
-        if (jPanelGame.getAbstractPacman().eatCookie(jPanelGame.getJbuCookie())) {
-            jPanelGame.remove(jPanelGame.getJbuCookie());
-//              jPanelGame.repaint();
-            jPanelGame.revalidate();
-            System.out.println("borre galleta");
-            //aqui deben enviar la nueva posicion de la galleta, lo descomentan y funciona
-//                a la perfeccion
-//               jPanelGame.drawButtonCookie("posicion aleatoria");
-            jPanelGame.repaint();
-
+        if (jPanelGame.getAbstractPacman().isEatCookie(jPanelGame.getJbuCookie())) {
+            eat();
         }
     }
 
@@ -108,16 +101,9 @@ public abstract class ControllerButtons implements ActionListener {
                 move();
                 break;
         }
-        if (jPanelGame.getAbstractPacman().eatCookie(jPanelGame.getJbuCookie())) {
-            jPanelGame.remove(jPanelGame.getJbuCookie());
-//              jPanelGame.repaint();
-            jPanelGame.revalidate();
-            System.out.println("borre galleta");
-            //aqui deben enviar la nueva posicion de la galleta, lo descomentan y funciona
-//                a la perfeccion
-//               jPanelGame.drawButtonCookie("posicion aleatoria");
-            jPanelGame.repaint();
-
+       
+        if (jPanelGame.getAbstractPacman().isEatCookie(jPanelGame.getJbuCookie())) {
+            eat();
         }
     }
 }

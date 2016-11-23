@@ -1,6 +1,7 @@
 package model;
 
 import java.awt.Point;
+import java.awt.Rectangle;
 import javax.swing.JButton;
 
 /**
@@ -24,9 +25,9 @@ public abstract class AbstractPacman {
     protected double x_Pos;
     protected double y_Pos;
 
-    public AbstractPacman(String ip, String name,Point position) {
-        this.ip=ip;
-        this.name=name;
+    public AbstractPacman(String ip, String name, Point position) {
+        this.ip = ip;
+        this.name = name;
         this.width = DEFAULT_WIDTH;
         this.height = DEFAULT_HEIGHT;
         this.limit_width = DEFAULT_LIMIT_WIDTH;
@@ -93,84 +94,93 @@ public abstract class AbstractPacman {
             x_Pos += space;
         }
     }
-    
-    
+
     /**
      * metodo que se encarga de comer la galleta
      */
-     public boolean eatCookie(JButton cookie) {       
-        return eatCookieLeft(cookie) ||eatCookieRight(cookie) ||eatCookieUp(cookie)||eatCookieDown(cookie);
-        
-     }
-     public boolean eatCookieLeft(JButton cookie){
-         boolean isEaten=false;
-         Point pointPacmanMouth1 = new Point((int)(x_Pos+width), (int)y_Pos);
-         Point pointPacmanMouth2= new Point((int)(x_Pos+width),(int)(y_Pos+height));
-               Point pointCookie1 = new Point((int)(cookie.getX()), (int)cookie.getY());
-        	Point pointCookie2= new Point((int)(cookie.getX()), (int)(cookie.getY()+cookie.getHeight()));
-               
+    public boolean eatCookie(JButton cookie) {
+        return eatCookieLeft(cookie) || eatCookieRight(cookie) || eatCookieUp(cookie) || eatCookieDown(cookie);
+
+    }
+
+    public boolean isEatCookie(JButton cookie) {
+        Rectangle rectangleCookie = cookie.getBounds();
+        Rectangle rectangleUser = new Rectangle((int) x_Pos, (int) y_Pos, (int) width, (int) height);
+        return rectangleUser.intersects(rectangleCookie);
+    }
+
+    public boolean eatCookieLeft(JButton cookie) {
+        boolean isEaten = false;
+        Point pointPacmanMouth1 = new Point((int) (x_Pos + width), (int) y_Pos);
+        Point pointPacmanMouth2 = new Point((int) (x_Pos + width), (int) (y_Pos + height));
+        Point pointCookie1 = new Point((int) (cookie.getX()), (int) cookie.getY());
+        Point pointCookie2 = new Point((int) (cookie.getX()), (int) (cookie.getY() + cookie.getHeight()));
+
 //		boolean collisionY = (x_Pos+width >= cookie.getX_Pos() && y_Pos+height >= cookie.getHeight()+cookie.getHeight()); 
-			if(pointPacmanMouth1.getX() == pointCookie1.getX() &&
-                           pointPacmanMouth1.getY() == pointCookie1.getY() &&
-                                pointPacmanMouth2.getX() == pointCookie2.getX() &&
-                                pointPacmanMouth2.getY() == pointCookie2.getY()){
-                        isEaten=true;
-                        
-                            System.out.println("siii me la comi por la izquierda");
-                        }
-		return isEaten;
-	}
-      public boolean eatCookieRight(JButton cookie){
-         boolean isEaten=false;
-         Point pointPacmanMouth1 = new Point((int)(x_Pos), (int)y_Pos);
-         Point pointPacmanMouth2= new Point((int)(x_Pos),(int)(y_Pos+height));
-               Point pointCookie1 = new Point((int)(cookie.getX()+cookie.getWidth()), (int)cookie.getY());
-        	Point pointCookie2= new Point((int)(cookie.getX()+cookie.getWidth()), (int)(cookie.getY()+cookie.getHeight()));
-               
+        if (pointPacmanMouth1.getX() == pointCookie1.getX()
+                && pointPacmanMouth1.getY() == pointCookie1.getY()
+                && pointPacmanMouth2.getX() == pointCookie2.getX()
+                && pointPacmanMouth2.getY() == pointCookie2.getY()) {
+            isEaten = true;
+
+            System.out.println("siii me la comi por la izquierda");
+        }
+        return isEaten;
+    }
+
+    public boolean eatCookieRight(JButton cookie) {
+        boolean isEaten = false;
+        Point pointPacmanMouth1 = new Point((int) (x_Pos), (int) y_Pos);
+        Point pointPacmanMouth2 = new Point((int) (x_Pos), (int) (y_Pos + height));
+        Point pointCookie1 = new Point((int) (cookie.getX() + cookie.getWidth()), (int) cookie.getY());
+        Point pointCookie2 = new Point((int) (cookie.getX() + cookie.getWidth()), (int) (cookie.getY() + cookie.getHeight()));
+
 //		boolean collisionY = (x_Pos+width >= cookie.getX_Pos() && y_Pos+height >= cookie.getHeight()+cookie.getHeight()); 
-			if(pointPacmanMouth1.getX() == pointCookie1.getX() &&
-                           pointPacmanMouth1.getY() == pointCookie1.getY() &&
-                                pointPacmanMouth2.getX() == pointCookie2.getX() &&
-                                pointPacmanMouth2.getY() == pointCookie2.getY()){
-                        isEaten=true;
-                            System.out.println("siii me la comi por la derecha");
-                        }
-		return isEaten;
-	}
-       public boolean eatCookieUp(JButton cookie){
-         boolean isEaten=false;
-         Point pointPacmanMouth1 = new Point((int)(x_Pos), (int)(y_Pos+height));
-         Point pointPacmanMouth2= new Point((int)(x_Pos+width),(int)(y_Pos+height));
-               Point pointCookie1 = new Point((int)(cookie.getX()), (int)cookie.getY());
-        	Point pointCookie2= new Point((int)(cookie.getX()+cookie.getWidth()), (int)(cookie.getY()));
-               
+        if (pointPacmanMouth1.getX() == pointCookie1.getX()
+                && pointPacmanMouth1.getY() == pointCookie1.getY()
+                && pointPacmanMouth2.getX() == pointCookie2.getX()
+                && pointPacmanMouth2.getY() == pointCookie2.getY()) {
+            isEaten = true;
+            System.out.println("siii me la comi por la derecha");
+        }
+        return isEaten;
+    }
+
+    public boolean eatCookieUp(JButton cookie) {
+        boolean isEaten = false;
+        Point pointPacmanMouth1 = new Point((int) (x_Pos), (int) (y_Pos + height));
+        Point pointPacmanMouth2 = new Point((int) (x_Pos + width), (int) (y_Pos + height));
+        Point pointCookie1 = new Point((int) (cookie.getX()), (int) cookie.getY());
+        Point pointCookie2 = new Point((int) (cookie.getX() + cookie.getWidth()), (int) (cookie.getY()));
+
 //		boolean collisionY = (x_Pos+width >= cookie.getX_Pos() && y_Pos+height >= cookie.getHeight()+cookie.getHeight()); 
-			if(pointPacmanMouth1.getX() == pointCookie1.getX() &&
-                           pointPacmanMouth1.getY() == pointCookie1.getY() &&
-                                pointPacmanMouth2.getX() == pointCookie2.getX() &&
-                                pointPacmanMouth2.getY() == pointCookie2.getY()){
-                        isEaten=true;
-                            System.out.println("siii me la comi por arriba");
-                        }
-		return isEaten;
-	}
-        public boolean eatCookieDown(JButton cookie){
-         boolean isEaten=false;
-         Point pointPacmanMouth1 = new Point((int)(x_Pos), (int)y_Pos);
-         Point pointPacmanMouth2= new Point((int)(x_Pos+width),(int)(y_Pos));
-               Point pointCookie1 = new Point((int)(cookie.getX()), (int)cookie.getY());
-        	Point pointCookie2= new Point((int)(cookie.getX()+cookie.getWidth()), (int)(cookie.getY()));
-               
+        if (pointPacmanMouth1.getX() == pointCookie1.getX()
+                && pointPacmanMouth1.getY() == pointCookie1.getY()
+                && pointPacmanMouth2.getX() == pointCookie2.getX()
+                && pointPacmanMouth2.getY() == pointCookie2.getY()) {
+            isEaten = true;
+            System.out.println("siii me la comi por arriba");
+        }
+        return isEaten;
+    }
+
+    public boolean eatCookieDown(JButton cookie) {
+        boolean isEaten = false;
+        Point pointPacmanMouth1 = new Point((int) (x_Pos), (int) y_Pos);
+        Point pointPacmanMouth2 = new Point((int) (x_Pos + width), (int) (y_Pos));
+        Point pointCookie1 = new Point((int) (cookie.getX()), (int) cookie.getY());
+        Point pointCookie2 = new Point((int) (cookie.getX() + cookie.getWidth()), (int) (cookie.getY()));
+
 //		boolean collisionY = (x_Pos+width >= cookie.getX_Pos() && y_Pos+height >= cookie.getHeight()+cookie.getHeight()); 
-			if(pointPacmanMouth1.getX() == pointCookie1.getX() &&
-                           pointPacmanMouth1.getY() == pointCookie1.getY() &&
-                                pointPacmanMouth2.getX() == pointCookie2.getX() &&
-                                pointPacmanMouth2.getY() == pointCookie2.getY()){
-                        isEaten=true;
-                            System.out.println("siii me la comi por la abajo");
-                        }
-		return isEaten;
-	}
+        if (pointPacmanMouth1.getX() == pointCookie1.getX()
+                && pointPacmanMouth1.getY() == pointCookie1.getY()
+                && pointPacmanMouth2.getX() == pointCookie2.getX()
+                && pointPacmanMouth2.getY() == pointCookie2.getY()) {
+            isEaten = true;
+            System.out.println("siii me la comi por la abajo");
+        }
+        return isEaten;
+    }
 //        public boolean eatCookie(Cookie cookie) {
 //        	boolean collisionX = (cookie.getX_Pos() >= x_Pos && 
 //				cookie.getX_Pos() <= x_Pos+ width)
@@ -182,6 +192,7 @@ public abstract class AbstractPacman {
 //				cookie.getY_pos() + height <= y_Pos + height);
 //		return collisionX && collisionY;
 //	}
+
     public double getWidth() {
         return width;
     }
@@ -238,5 +249,4 @@ public abstract class AbstractPacman {
         this.y_Pos = y_Pos;
     }
 
-   
 }
