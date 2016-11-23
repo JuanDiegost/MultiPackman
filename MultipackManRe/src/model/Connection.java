@@ -61,6 +61,7 @@ public class Connection extends Thread {
         for (Connection listConnection : Server.listConnections) {
             try {
                 listConnection.sendString(Global.ACTION_SCORE);
+                listConnection.sendObject(id);
                 listConnection.sendObject(score);
             } catch (IOException ex) {
                 Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
@@ -160,6 +161,12 @@ public class Connection extends Thread {
                         ip = (String) receiveObject();
                         point = (Point) receiveObject();
                         color = (Color) receiveObject();
+                        if (Server.pointCookie == null) {
+                            Server.pointCookie = generateCookie();
+                            System.out.println("Nullllll");
+                        }
+                        System.out.println("Not Nullllll");
+                        sendObject(Server.pointCookie);
                         mainWindowServer.addClient(ip, id + "." + name);
                         newUser();
                         //sendAll(name, ip);
@@ -267,11 +274,11 @@ public class Connection extends Thread {
     }
 
     private void userEatCookie() {
-        Point point = generateCookie();
+        Server.pointCookie = generateCookie();
         for (Connection connection : Server.listConnections) {
             try {
                 connection.sendString(Global.ACTION_SPAWN_COOKIE);
-                connection.sendObject(point);
+                connection.sendObject(Server.pointCookie);
             } catch (IOException ex) {
                 Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
             }

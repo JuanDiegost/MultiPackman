@@ -1,6 +1,7 @@
 package model;
 
 
+import java.awt.Point;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
@@ -26,9 +27,10 @@ public class Server extends Thread {
     private ServerSocket server;
     private MainWindowServer console;
     public static ArrayList<Connection> listConnections;
+    public static Point pointCookie;
     public ArrayList<IpData> datas;
     public static final int CONNECTION_MAX_SERVER = 5;
-    public static final int CONNECTION_MAX_USER = 2;
+    public static final int CONNECTION_MAX_USER = 5;
 
     public Server() throws IOException {
         this.server = new ServerSocket(Global.DEFAULT_PORT);

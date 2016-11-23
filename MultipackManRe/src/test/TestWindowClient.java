@@ -6,6 +6,7 @@
 package test;
 
 import controller.ControllerButtons;
+import java.awt.Color;
 import java.awt.Point;
 import view.WindowClientGame;
 
@@ -17,7 +18,7 @@ public class TestWindowClient {
     
     public static void main(String args[]) {
         
-        WindowClientGame wc=new WindowClientGame("localhost", "name", new Point(30, 50), new Point(100, 200));
+        WindowClientGame wc=new WindowClientGame("localhost", "name", new Point(30, 50), new Point(100, 200),Color.BLACK);
         wc.setVisible(true);
         
     }

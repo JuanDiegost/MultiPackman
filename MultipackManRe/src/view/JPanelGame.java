@@ -34,7 +34,7 @@ public class JPanelGame extends JPanel {
     private JButton jbuCookie;
     private ArrayList<PackManConponent> arrayButtonsPacman;
 //------------------------------Constructor------------------------------//
-    public JPanelGame(String ip, String name, Point pointPacman, Point pointCookie) {
+    public JPanelGame(String ip, String name, Point pointPacman, Point pointCookie,Color color) {
         abstractPacman = new Pacman(ip, name, pointPacman);
         cookie= new Cookie(pointCookie);
         this.setLayout(null);
@@ -42,7 +42,7 @@ public class JPanelGame extends JPanel {
         this.setBorder(bordejpanel);
         this.setSize(500, 550);
         arrayButtonsPacman = new ArrayList<>();
-        drawButtonPacman(name);
+        drawButtonPacman(name,color);
         drawButtonCookie(pointCookie);
 //        this.setBackground(Color.blue);
 
@@ -53,16 +53,15 @@ public class JPanelGame extends JPanel {
  * @param name
  * @param point
  * @param score 
-     * @param color 
  */
     public void addRival(int id, String name,Point point,int score,Color color) {
-        jBuPacman = new PackManConponent(name, id, score, color);
-        jBuPacman.setBounds(point.x, point.y, (int) abstractPacman.getWidth(), (int) abstractPacman.getHeight());
-        jBuPacman.setBorder(null);
-        jBuPacman.setContentAreaFilled(false);
+        PackManConponent newPackman = new PackManConponent(name, id, score, color);
+        newPackman.setBounds(point.x, point.y, (int) abstractPacman.getWidth(), (int) abstractPacman.getHeight());
+        newPackman.setBorder(null);
+        newPackman.setContentAreaFilled(false);
 //        jBuPacman.setEnabled(false);
-        this.add(jBuPacman);
-        arrayButtonsPacman.add(jBuPacman);
+        this.add(newPackman);
+        arrayButtonsPacman.add(newPackman);
         repaint();
     }
 
@@ -84,8 +83,8 @@ public class JPanelGame extends JPanel {
         jBuPacman.setScore(score);
     }
 
-    public void drawButtonPacman(String name) {
-        jBuPacman = new PackManConponent(name, 0, 0, Color.yellow);     
+    public void drawButtonPacman(String name,Color color) {
+        jBuPacman = new PackManConponent(name, 0, 0, color);     
         jBuPacman.setBounds((int) abstractPacman.getX_Pos(), (int) abstractPacman.getY_Pos(), (int) abstractPacman.getWidth(), (int) abstractPacman.getHeight());
         jBuPacman.setBorder(null);
         jBuPacman.setContentAreaFilled(false);
@@ -184,6 +183,14 @@ public void removePacman(int idPacman){
 
     public JButton getJbuCookie() {
         return jbuCookie;
+    }
+
+    void setScoreRival(int id, int score) {
+        for (PackManConponent packManConponent : arrayButtonsPacman) {
+            if (packManConponent.getId()==id) {
+                packManConponent.setScore(score);
+            }
+        }
     }
     
 

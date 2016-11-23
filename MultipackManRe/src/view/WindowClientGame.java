@@ -24,11 +24,11 @@ public class WindowClientGame extends JFrame {
     private String ip;
     private String name;
 
-    public WindowClientGame(String ip, String name, Point positionPacman, Point positionCookie) {
+    public WindowClientGame(String ip, String name, Point positionPacman, Point positionCookie,Color color) {
         this.ip = ip;
         this.name = name;
         this.positionPacman = positionPacman;
-        jPanelGame = new JPanelGame(ip, name, positionPacman, positionCookie);
+        jPanelGame = new JPanelGame(ip, name, positionPacman, positionCookie,color);
         this.add(jPanelGame);
         //this.setTitle("GAME PACMAN");
         this.setSize(900, 550);
@@ -54,6 +54,10 @@ public class WindowClientGame extends JFrame {
     
     public void setScore(int score){
         jPanelGame.setScore(score);
+    }
+    
+    public void setScoreRival(int id,int score){
+        jPanelGame.setScoreRival(id,score);
     }
     
     public void addRival(String name,int id,Point point,int score,Color color){
