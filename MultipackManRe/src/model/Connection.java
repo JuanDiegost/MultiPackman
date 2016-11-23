@@ -85,7 +85,7 @@ public class Connection extends Thread {
         for (Connection connection : Server.listConnections) {
             if (connection.getIdUser() != getIdUser()) {
                 try {
-                    System.out.println(id+"  "+connection.getIdUser());
+                    System.out.println(id + "  " + connection.getIdUser());
                     connection.sendString(Global.ACTION_NEW_OTHER_USER);
                     connection.sendObject(id);
                     connection.sendObject(name);
@@ -221,7 +221,7 @@ public class Connection extends Thread {
         return rx.readObject();
     }
 
-    public String receiveAction() throws IOException {
+    public synchronized String receiveAction() throws IOException {
         return rx.readUTF();
     }
 
@@ -246,7 +246,7 @@ public class Connection extends Thread {
     private void moveUser() {
         try {
             point = (Point) receiveObject();
-            char d=(char) receiveObject();
+            char d = (char) receiveObject();
             for (Connection connection : Server.listConnections) {
                 try {
                     connection.sendString(Global.ACTION_MOVE_RIVALS_PACKMAN);
@@ -269,12 +269,14 @@ public class Connection extends Thread {
         return name;
     }
 
-    public Point generateCookie() {
+    public synchronized Point generateCookie() {
         return new Point((int) (Math.random() * Global.DIMENSION.getWidth()), (int) (Math.random() * Global.DIMENSION.getHeight()));
     }
 
     private void userEatCookie() {
-        Server.pointCookie = generateCookie();
+        synchronized (this) {
+            Server.pointCookie = generateCookie();
+        }
         for (Connection connection : Server.listConnections) {
             try {
                 connection.sendString(Global.ACTION_SPAWN_COOKIE);
