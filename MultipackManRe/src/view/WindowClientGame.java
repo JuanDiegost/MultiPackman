@@ -73,8 +73,8 @@ public class WindowClientGame extends JFrame {
 
     }
 
-    public void moveRivals(Point point, int id) {
-        jPanelGame.movePackmanRival(point, id);
+    public void moveRivals(Point point, int id,char d) {
+        jPanelGame.movePackmanRival(point, id,d);
     }
 
     public void setScore(int score) {

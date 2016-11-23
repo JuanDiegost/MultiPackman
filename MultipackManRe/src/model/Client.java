@@ -60,10 +60,11 @@ public class Client extends controller.ControllerButtons implements Runnable {
     }
 
     @Override
-    public void move() {
+    public void move(char d) {
         try {
             sendString(Global.ACTION_MOVE);
             sendObject(game.getPositionPacman());
+            sendObject(d);
         } catch (IOException ex) {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -109,7 +110,8 @@ public class Client extends controller.ControllerButtons implements Runnable {
                     case Global.ACTION_MOVE_RIVALS_PACKMAN:
                         int id = (int) receiveObject();
                         Point point = (Point) receiveObject();
-                        game.moveRivals(point, id);
+                        char d=(char) receiveObject();
+                        game.moveRivals(point, id,d);
                         break;
                     case Global.ACTION_NEW_OTHER_USER:
                         //Optener id y nombre cliente

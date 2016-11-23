@@ -22,7 +22,7 @@ public abstract class ControllerButtons implements ActionListener {
         this.jPanelGame = jPanelGame;
     }
 
-    public abstract void move();
+    public abstract void move(char d);
     public abstract void eat();
 
     @Override
@@ -30,35 +30,35 @@ public abstract class ControllerButtons implements ActionListener {
         switch (ae.getActionCommand()) {
             case GlobalActionsAnimation.ACTION_UP:
                 jPanelGame.moveUp();
-                move();
+                move('n');
                 break;
             case GlobalActionsAnimation.ACTION_DOWN:
                 jPanelGame.moveDown();
-                move();
+                move('s');
                 break;
             case GlobalActionsAnimation.ACTION_LEFT:
                 jPanelGame.moveLeft();
-                move();
+                move('l');
                 break;
             case GlobalActionsAnimation.ACTION_RIGHT:
                 jPanelGame.moveRight();
-                move();
+                move('r');
                 break;
             case GlobalActionsAnimation.ACTION_DIAG_UP_LEFT:
                 jPanelGame.moveDia_Up_Left();
-                move();
+                move('l');
                 break;
             case GlobalActionsAnimation.ACTION_DIAG_UP_RIGHT:
                 jPanelGame.moveDia_Up_Right();
-                move();
+                move('r');
                 break;
             case GlobalActionsAnimation.ACTION_DIAG_DOWN_LEFT:
                 jPanelGame.moveDia_Down_Left();
-                move();
+                move('l');
                 break;
             case GlobalActionsAnimation.ACTION_DIAG_DOWN_RIGHT:
                 jPanelGame.moveDia_Down_Right();
-                move();
+                move('r');
                 break;
         }
         if (jPanelGame.getAbstractPacman().isEatCookie(jPanelGame.getJbuCookie())) {
@@ -71,35 +71,35 @@ public abstract class ControllerButtons implements ActionListener {
         switch (action) {
             case GlobalActionsAnimation.ACTION_UP:
                 jPanelGame.moveUp();
-                move();
+                move('n');
                 break;
             case GlobalActionsAnimation.ACTION_DOWN:
                 jPanelGame.moveDown();
-                move();
+                move('s');
                 break;
             case GlobalActionsAnimation.ACTION_LEFT:
                 jPanelGame.moveLeft();
-                move();
+                move('l');
                 break;
             case GlobalActionsAnimation.ACTION_RIGHT:
                 jPanelGame.moveRight();
-                move();
+                move('r');
                 break;
             case GlobalActionsAnimation.ACTION_DIAG_UP_LEFT:
                 jPanelGame.moveDia_Up_Left();
-                move();
+                move('l');
                 break;
             case GlobalActionsAnimation.ACTION_DIAG_UP_RIGHT:
                 jPanelGame.moveDia_Up_Right();
-                move();
+                move('r');
                 break;
             case GlobalActionsAnimation.ACTION_DIAG_DOWN_LEFT:
                 jPanelGame.moveDia_Down_Left();
-                move();
+                move('l');
                 break;
             case GlobalActionsAnimation.ACTION_DIAG_DOWN_RIGHT:
                 jPanelGame.moveDia_Down_Right();
-                move();
+                move('r');
                 break;
         }
        

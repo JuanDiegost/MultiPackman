@@ -163,9 +163,7 @@ public class Connection extends Thread {
                         color = (Color) receiveObject();
                         if (Server.pointCookie == null) {
                             Server.pointCookie = generateCookie();
-                            System.out.println("Nullllll");
                         }
-                        System.out.println("Not Nullllll");
                         sendObject(Server.pointCookie);
                         sendObject(getIdUser());
                         mainWindowServer.addClient(ip, id + "." + name);
@@ -248,11 +246,13 @@ public class Connection extends Thread {
     private void moveUser() {
         try {
             point = (Point) receiveObject();
+            char d=(char) receiveObject();
             for (Connection connection : Server.listConnections) {
                 try {
                     connection.sendString(Global.ACTION_MOVE_RIVALS_PACKMAN);
                     connection.sendObject(getIdUser());
                     connection.sendObject(point);
+                    connection.sendObject(d);
                 } catch (IOException ex) {
                     Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
                 }

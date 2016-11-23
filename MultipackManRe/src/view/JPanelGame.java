@@ -69,10 +69,11 @@ public class JPanelGame extends JPanel {
         repaint();
     }
 
-    public void movePackmanRival(Point point, int id) {
+    public void movePackmanRival(Point point, int id,char d) {
         for (PackManConponent packManConponent : arrayButtonsPacman) {
             if (packManConponent.getId() == id) {
                 packManConponent.setBounds(point.x, point.y, (int) abstractPacman.getWidth(), (int) abstractPacman.getHeight());
+                packManConponent.setOrientation(d);
                 return;
             }
         }

@@ -30,7 +30,7 @@ public class Server extends Thread {
     public static Point pointCookie;
     public ArrayList<IpData> datas;
     public static final int CONNECTION_MAX_SERVER = 5;
-    public static final int CONNECTION_MAX_USER = 5;
+    public static final int CONNECTION_MAX_USER = 3;
 
     public Server() throws IOException {
         this.server = new ServerSocket(Global.DEFAULT_PORT);

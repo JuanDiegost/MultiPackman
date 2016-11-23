@@ -41,6 +41,12 @@ public class PackManConponent extends JButton implements Runnable {
         thread.start();
     }
 
+    public void setOrientation(char orientation) {
+        this.orientation = orientation;
+        revalidate();
+        repaint();
+    }
+
     public void placeTriangle(char orientation) {
         switch (orientation) {
             case 'n': {
