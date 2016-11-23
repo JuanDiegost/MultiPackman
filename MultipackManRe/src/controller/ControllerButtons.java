@@ -5,8 +5,10 @@
  */
 package controller;
 
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JOptionPane;
 import value.GlobalActionsAnimation;
 import view.JPanelGame;
 
@@ -58,8 +60,17 @@ private JPanelGame jPanelGame;
                 jPanelGame.moveDia_Down_Right();
                 move();
                 break;
+        }
+        if (jPanelGame.getAbstractPacman().eatCookie(jPanelGame.getJbuCookie())) {
+            jPanelGame.remove(jPanelGame.getJbuCookie());
+//              jPanelGame.repaint();
+            jPanelGame.revalidate();
+            System.out.println("borre galleta");
+            //aqui deben enviar la nueva posicion de la galleta, lo descomentan y funciona
+//                a la perfeccion
+//               jPanelGame.drawButtonCookie("posicion aleatoria");
+            jPanelGame.repaint();
 
         }
-
     }
 }

@@ -5,6 +5,7 @@
  */
 package model;
 
+import java.awt.Color;
 import java.awt.Point;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -31,6 +32,8 @@ public class Connection extends Thread {
     private String ip;
     private String name;
     private int score;
+    private Point point;
+    private Color color;
     private boolean working;
 
     public Connection(Socket socket, MainWindowServer mainWindowServer) {
@@ -49,7 +52,7 @@ public class Connection extends Thread {
         } catch (IOException ex) {
             Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
         }
-        this.ip =socket.getInetAddress().getHostAddress();
+        this.ip = socket.getInetAddress().getHostAddress();
         start();
     }
 
@@ -69,6 +72,14 @@ public class Connection extends Thread {
         return score;
     }
 
+    public Point getPoint() {
+        return point;
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
     private void newUser() {
         for (Connection connection : Server.listConnections) {
             if (connection.getIdUser() != getIdUser()) {
@@ -77,12 +88,14 @@ public class Connection extends Thread {
                     connection.sendObject(id);
                     connection.sendObject(name);
                     connection.sendObject(score);
-                    //listConnection.sendObject(color);//envia color de usuario
+                    connection.sendObject(point);
+                    connection.sendObject(color);
                     sendString(Global.ACTION_NEW_OTHER_USER);
                     sendObject(connection.getIdUser());
                     sendObject(connection.getNameUser());
                     sendObject(connection.getScore());
-                    //sendObject(color);//enviar color del listConnection
+                    sendObject(connection.getPoint());
+                    sendObject(connection.getColor());//enviar color del listConnection
                 } catch (IOException ex) {
                     Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -116,6 +129,17 @@ public class Connection extends Thread {
         }
     }
 
+    private void closeConnectionByUser() {
+        for (Connection connection : Server.listConnections) {
+            try {
+                connection.sendString(Global.ACTION_CLOSE_CONNECTION_BY_USER);
+                connection.sendObject(id);
+            } catch (IOException ex) {
+                Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
     @Override
     public void run() {
         super.run();
@@ -126,20 +150,23 @@ public class Connection extends Thread {
                     action = receiveAction();
                 } catch (IOException ex) {
                     mainWindowServer.remove(id + "." + name);
+                    Server.listConnections.remove(this);
+                    closeConnectionByUser();
                     socket.close();
                 }
                 switch (action) {
                     case Global.ACTION_REGISTER:
-                        System.out.println(id);
                         name = (String) receiveObject();
                         ip = (String) receiveObject();
+                        point = (Point) receiveObject();
+                        color = (Color) receiveObject();
                         mainWindowServer.addClient(ip, id + "." + name);
                         newUser();
                         //sendAll(name, ip);
                         //sendList();
                         break;
                     case Global.ACTION_MOVE:
-                            moveUser();
+                        moveUser();
                         break;
                     case Global.ACTION_EAT_COOKIE:
                         userEatCookie();
@@ -210,9 +237,9 @@ public class Connection extends Thread {
         }
     }
 
-    private void moveUser( ) {
+    private void moveUser() {
         try {
-            Point point=(Point) receiveObject();
+            point = (Point) receiveObject();
             for (Connection connection : Server.listConnections) {
                 System.out.println("De " + name + " a " + connection.getNameUser() + " " + point.toString());
                 try {
@@ -236,7 +263,7 @@ public class Connection extends Thread {
     }
 
     public Point generateCookie() {
-        return new Point((int) (Math.random() * Global.DIMENCION.getWidth()), (int) (Math.random() * Global.DIMENCION.getHeight()));
+        return new Point((int) (Math.random() * Global.DIMENSION.getWidth()), (int) (Math.random() * Global.DIMENSION.getHeight()));
     }
 
     private void userEatCookie() {

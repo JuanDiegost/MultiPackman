@@ -6,45 +6,63 @@
 package view;
 
 import java.awt.Color;
+import java.awt.Image;
 import java.awt.Point;
 import java.util.ArrayList;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 import model.AbstractPacman;
+import model.Cookie;
 import model.Pacman;
 
 /**
  *
  * @author KAROL ALFONSO
+ * @author YULIANA BOYACA
  */
 public class JPanelGame extends JPanel {
 
     private AbstractPacman abstractPacman;
     private PackManConponent jBuPacman;
+    private Cookie cookie;
+    
+    private JButton jbuCookie;
     private ArrayList<PackManConponent> arrayButtonsPacman;
-
-    public JPanelGame(String ip, String name, Point pointPacman) {
+//------------------------------Constructor------------------------------//
+    public JPanelGame(String ip, String name, Point pointPacman, Point pointCookie) {
         abstractPacman = new Pacman(ip, name, pointPacman);
+        cookie= new Cookie(pointCookie);
         this.setLayout(null);
-        Border bordejpanel = new TitledBorder(new EtchedBorder(), "game");
+        Border bordejpanel = new TitledBorder(new EtchedBorder(), "Game");
         this.setBorder(bordejpanel);
         this.setSize(500, 550);
         arrayButtonsPacman = new ArrayList<>();
         drawButtonPacman(name);
+        drawButtonCookie(pointCookie);
 //        this.setBackground(Color.blue);
 
     }
-
-    public void addRival(int id, String name,Point point,int score) {
-        PackManConponent newPackman = new PackManConponent(name, id, score, Color.yellow);
-        newPackman.setBounds(point.x, point.y, (int) abstractPacman.getWidth(), (int) abstractPacman.getHeight());
-        newPackman.setBorder(null);
-        newPackman.setContentAreaFilled(false);
+/**
+ * Este metodo agrega los rivales con sus caracteristicas.
+ * @param id
+ * @param name
+ * @param point
+ * @param score 
+     * @param color 
+ */
+    public void addRival(int id, String name,Point point,int score,Color color) {
+        jBuPacman = new PackManConponent(name, id, score, color);
+        jBuPacman.setBounds(point.x, point.y, (int) abstractPacman.getWidth(), (int) abstractPacman.getHeight());
+        jBuPacman.setBorder(null);
+        jBuPacman.setContentAreaFilled(false);
 //        jBuPacman.setEnabled(false);
-        this.add(newPackman);
-        arrayButtonsPacman.add(newPackman);
+        this.add(jBuPacman);
+        arrayButtonsPacman.add(jBuPacman);
         repaint();
     }
 
@@ -67,16 +85,36 @@ public class JPanelGame extends JPanel {
     }
 
     public void drawButtonPacman(String name) {
-        jBuPacman = new PackManConponent(name, 0, 0, Color.yellow);
-        
+        jBuPacman = new PackManConponent(name, 0, 0, Color.yellow);     
         jBuPacman.setBounds((int) abstractPacman.getX_Pos(), (int) abstractPacman.getY_Pos(), (int) abstractPacman.getWidth(), (int) abstractPacman.getHeight());
-
         jBuPacman.setBorder(null);
         jBuPacman.setContentAreaFilled(false);
 //        jBuPacman.setEnabled(false);
         this.add(jBuPacman);
     }
-
+    
+     public void drawButtonCookie(Point positionCookie) {
+        jbuCookie = new JButton();
+        jbuCookie.setBounds((int) positionCookie.getX(), (int) positionCookie.getY(), (int) cookie.getWidth(), (int) cookie.getHeight());
+//        jbuCookie.setBorder(null);
+//        jbuCookie.setContentAreaFilled(false);
+//        jBuPacman.setEnabled(false);
+        ImageIcon imageIcon = new ImageIcon("iconProyect/galleta.jpg");
+        Icon icon = new ImageIcon(imageIcon.getImage().getScaledInstance((int)cookie.getWidth(),(int) cookie.getHeight(), Image.SCALE_DEFAULT));
+        this.repaint();
+        jbuCookie.setIcon(icon);
+        this.add(jbuCookie);
+    }
+public void removePacman(int idPacman){
+     
+    for (PackManConponent pacman : arrayButtonsPacman) {
+       if(pacman.getId()== idPacman){
+       arrayButtonsPacman.remove(pacman);
+       this.remove(jBuPacman);
+       this.repaint();
+       }
+    }
+}
     public void moveUp() {
         abstractPacman.makeMovementUP(10);
         jBuPacman.moveUp();
@@ -136,4 +174,19 @@ public class JPanelGame extends JPanel {
         repaint();
     }
 
+    public AbstractPacman getAbstractPacman() {
+        return abstractPacman;
+    }
+
+    public Cookie getCookie() {
+        return cookie;
+    }
+
+    public JButton getJbuCookie() {
+        return jbuCookie;
+    }
+    
+
+    
+    
 }

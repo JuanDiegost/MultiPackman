@@ -17,7 +17,7 @@ public class TestWindowClient {
     
     public static void main(String args[]) {
         
-        WindowClientGame wc=new WindowClientGame("10.4.85.93","KaYu",new Point(30, 50));
+        WindowClientGame wc=new WindowClientGame("localhost", "name", new Point(30, 50), new Point(100, 200));
         wc.setVisible(true);
         
     }

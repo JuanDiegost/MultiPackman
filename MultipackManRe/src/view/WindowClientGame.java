@@ -6,6 +6,7 @@
 package view;
 
 import controller.ControllerButtons;
+import java.awt.Color;
 import java.awt.Point;
 import javax.swing.JFrame;
 import model.Client;
@@ -23,17 +24,17 @@ public class WindowClientGame extends JFrame {
     private String ip;
     private String name;
 
-    public WindowClientGame(String ip, String name, Point positionPacman) {
+    public WindowClientGame(String ip, String name, Point positionPacman, Point positionCookie) {
         this.ip = ip;
         this.name = name;
         this.positionPacman = positionPacman;
-        jPanelGame = new JPanelGame(ip, name, positionPacman);
+        jPanelGame = new JPanelGame(ip, name, positionPacman, positionCookie);
         this.add(jPanelGame);
         //this.setTitle("GAME PACMAN");
         this.setSize(900, 550);
         this.setLayout(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-
+ 
     }
     
     public void setController(ControllerButtons controllerButtons){
@@ -55,8 +56,16 @@ public class WindowClientGame extends JFrame {
         jPanelGame.setScore(score);
     }
     
-    public void addRival(String name,int id,Point point,int score){
-        jPanelGame.addRival(id, name,point,score);
+    public void addRival(String name,int id,Point point,int score,Color color){
+        jPanelGame.addRival(id, name,point,score,color);
+    }
+    
+    public void removeRival(int id){
+        jPanelGame.removePacman(id);
+    }
+    
+    public void drawnCookie(Point point){
+        jPanelGame.drawButtonCookie(point);
     }
 
     public JPanelButtons getjPanelButtons() {

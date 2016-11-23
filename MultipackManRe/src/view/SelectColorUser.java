@@ -43,13 +43,12 @@ public class SelectColorUser extends JDialog {
             @Override
             public void actionPerformed(ActionEvent e) {
                 color = jColorChooser.getColor();
-                     System.out.println("color seleccionado: "+jColorChooser.getColor());
             }
         });
     }
 
     public Color getColor() {
-        return color != null?color:Color.BLUE;
+        return color;
     }
     
     public static void main(String[] args) {

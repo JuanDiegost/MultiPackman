@@ -56,7 +56,7 @@ public class Server extends Thread {
                     for(IpData data : datas) {
                         if (data.existsHere(connection.getIp())) {
                             System.out.println("llll");
-                            if (data.getNumberOfConettion()<= CONNECTION_MAX_USER) {
+                            if (data.getNumberOfConettion()< CONNECTION_MAX_USER) {
                                 data.compareHere();                                
                             }else{
                                 connection.maxNumberConnectionByUser();

@@ -12,13 +12,14 @@ private String ip;
 private String name;
 
     public Pacman(String ip, String name, Point position) {
+       
         super(ip, name, position);
     }
   
 
-    @Override
-    public void eatCookie() {
-        
-    }
+    
+
+    
+
     
 }

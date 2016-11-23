@@ -16,6 +16,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import value.Global;
+import view.SelectColorUser;
 import view.WindowClientGame;
 
 /**
@@ -31,7 +32,8 @@ public class Client extends controller.ControllerButtons implements Runnable {
     private WindowClientGame game;
     private Thread thread;
     private int score;
-    
+    private SelectColorUser selectColorUser;
+
     private boolean work;
 
     public Client(String address) {
@@ -39,31 +41,31 @@ public class Client extends controller.ControllerButtons implements Runnable {
             this.socket = new Socket(address, Global.DEFAULT_PORT);
             work = true;
             action = "";
-            score=0;
-            thread=new Thread(this);
+            score = 0;
+            thread = new Thread(this);
             configureConnection();
         } catch (IOException ex) {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
-    
-    public void eatCookie(){
+
+    public void eatCookie() {
         try {
             sendString(Global.ACTION_EAT_COOKIE);
         } catch (IOException ex) {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     @Override
-    public void move(){
+    public void move() {
         try {
             sendString(Global.ACTION_MOVE);
             sendObject(game.getPositionPacman());
         } catch (IOException ex) {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
-        }      
+        }
     }
 
     private void configureConnection() throws IOException {
@@ -77,7 +79,7 @@ public class Client extends controller.ControllerButtons implements Runnable {
     public void run() {
         while (work) {
             //if si se comio la galleta
-            
+
             try {
                 try {
                     action = receiveAction();
@@ -105,25 +107,29 @@ public class Client extends controller.ControllerButtons implements Runnable {
                         receiveObject();
                         break;
                     case Global.ACTION_MOVE_RIVALS_PACKMAN:
-                        int id=(int) receiveObject();
-                        Point point=(Point) receiveObject();
+                        int id = (int) receiveObject();
+                        Point point = (Point) receiveObject();
                         game.moveRivals(point, id);
                         break;
                     case Global.ACTION_NEW_OTHER_USER:
                         //Optener id y nombre cliente
-                        int idNewClient=(int) receiveObject();
-                        String name=(String) receiveObject();
-                        int score=(int)receiveObject();
-                        //Point pointR=(Point) receiveObject();
-                        Color color=(Color) receiveObject();
+                        int idNewClient = (int) receiveObject();
+                        String name = (String) receiveObject();
+                        int scoreRival = (int) receiveObject();
+                        Point pointRival = (Point) receiveObject();
+                        Color colorRival = (Color) receiveObject();
                         //agrgar rival envia el color
-                        game.addRival(name, idNewClient,new Point(30, 50),score);
+                        game.addRival(name, idNewClient, pointRival, scoreRival,colorRival);
                         break;
                     case Global.ACTION_GET_POSITION:
                         sendObject(game.getPositionPacman());
                         break;
                     case Global.ACTION_GET_SCORE:
                         sendObject(this.score);
+                        break;
+                    case Global.ACTION_CLOSE_CONNECTION_BY_USER:
+                        int idUser=(int) receiveObject();
+                        //eliminar packman de usuario
                         break;
                 }
             } catch (IOException ex) {
@@ -156,16 +162,28 @@ public class Client extends controller.ControllerButtons implements Runnable {
     private void register() {
         try {
             InetAddress address = InetAddress.getLocalHost();
+            selectColorUser = new SelectColorUser();
             String name = JOptionPane.showInputDialog("Por favor escriba Su nombre: ");
+            selectColorUser.setVisible(true);
+            Color color = null;
+            while (color == null) {                
+                color=selectColorUser.getColor();
+                System.out.println();
+            }
+            selectColorUser.setVisible(false);
             sendString(Global.ACTION_REGISTER);
             sendObject(name);
             sendObject(address.getHostAddress());
-            //sendObject();enviar color
-            this.game=new WindowClientGame(address.getHostAddress(), name, new Point(30, 50));
+            sendObject(new Point(30, 50));
+            sendObject(selectColorUser.getColor());
+            Point pointCookie=(Point) receiveObject();
+            this.game = new WindowClientGame(address.getHostAddress(), name, new Point(30, 50),pointCookie);
             game.setController(this);
             setjPanelGame(game.getjPanelGame());
             game.setVisible(true);
         } catch (IOException ex) {
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

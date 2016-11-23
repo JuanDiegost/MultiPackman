@@ -30,6 +30,7 @@ public class Global {
     public static final String ACTION_SCORE="/sendScore";
     public static final String ACTION_GET_POSITION="/getPosition";
     public static final String ACTION_GET_SCORE="/getScore";
-    public static final Dimension DIMENCION=new Dimension(500, 500);
+    public static final String ACTION_CLOSE_CONNECTION_BY_USER="/closeConnectionByUser";
+    public static final Dimension DIMENSION=new Dimension(500, 500);
 
 }
