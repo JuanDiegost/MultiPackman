@@ -5,6 +5,7 @@
  */
 package model;
 
+import java.awt.Color;
 import java.awt.Point;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -62,8 +63,7 @@ public class Client extends controller.ControllerButtons implements Runnable {
             sendObject(game.getPositionPacman());
         } catch (IOException ex) {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
+        }      
     }
 
     private void configureConnection() throws IOException {
@@ -115,6 +115,8 @@ public class Client extends controller.ControllerButtons implements Runnable {
                         String name=(String) receiveObject();
                         int score=(int)receiveObject();
                         //Point pointR=(Point) receiveObject();
+                        Color color=(Color) receiveObject();
+                        //agrgar rival envia el color
                         game.addRival(name, idNewClient,new Point(30, 50),score);
                         break;
                     case Global.ACTION_GET_POSITION:
@@ -158,6 +160,7 @@ public class Client extends controller.ControllerButtons implements Runnable {
             sendString(Global.ACTION_REGISTER);
             sendObject(name);
             sendObject(address.getHostAddress());
+            //sendObject();enviar color
             this.game=new WindowClientGame(address.getHostAddress(), name, new Point(30, 50));
             game.setController(this);
             setjPanelGame(game.getjPanelGame());

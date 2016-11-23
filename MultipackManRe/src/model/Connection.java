@@ -70,17 +70,19 @@ public class Connection extends Thread {
     }
 
     private void newUser() {
-        for (Connection listConnection : Server.listConnections) {
-            if (listConnection.getIdUser() != getIdUser()) {
+        for (Connection connection : Server.listConnections) {
+            if (connection.getIdUser() != getIdUser()) {
                 try {
-                    listConnection.sendString(Global.ACTION_NEW_OTHER_USER);
-                    listConnection.sendObject(id);
-                    listConnection.sendObject(name);
-                    listConnection.sendObject(score);
+                    connection.sendString(Global.ACTION_NEW_OTHER_USER);
+                    connection.sendObject(id);
+                    connection.sendObject(name);
+                    connection.sendObject(score);
+                    //listConnection.sendObject(color);//envia color de usuario
                     sendString(Global.ACTION_NEW_OTHER_USER);
-                    sendObject(listConnection.getIdUser());
-                    sendObject(listConnection.getNameUser());
-                    sendObject(listConnection.getScore());
+                    sendObject(connection.getIdUser());
+                    sendObject(connection.getNameUser());
+                    sendObject(connection.getScore());
+                    //sendObject(color);//enviar color del listConnection
                 } catch (IOException ex) {
                     Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -111,17 +113,6 @@ public class Connection extends Thread {
             sendString(Global.ACTION_NEW_USER);
         } catch (IOException ex) {
             Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    private void sendAll(String ip, String name) {
-        for (Connection connection : Server.listConnections) {
-            try {
-                connection.sendString(name);
-                connection.sendString(ip);
-            } catch (IOException ex) {
-                Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
-            }
         }
     }
 
