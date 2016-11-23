@@ -34,7 +34,6 @@ public class WindowClientGame extends JFrame {
         this.setSize(900, 550);
         this.setLayout(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
- 
     }
     
     public void setController(ControllerButtons controllerButtons){
