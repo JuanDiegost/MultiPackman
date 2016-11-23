@@ -25,6 +25,7 @@ public class SinglePacman extends JButton implements KeyListener {
 
     private String ip;
     private String name;
+    private int id;
     private Thread me;
     private boolean isOfMe;
     public static final int DEFAULT_SISE = 50;
@@ -38,8 +39,9 @@ public class SinglePacman extends JButton implements KeyListener {
     private int score;
 
     @SuppressWarnings({"OverridableMethodCallInConstructor", "LeakingThisInConstructor"})
-    public SinglePacman(String ip, String name, Point position, boolean isOfMe, Color myColor) {
-        score = 0;
+    public SinglePacman(String ip, String name, Point position, boolean isOfMe, Color myColor,int id,int score) {
+        this.score = score;
+        this.id=id;
         inverse = true;
         this.setBorder(null);
         this.setBorderPainted(false);
@@ -47,7 +49,6 @@ public class SinglePacman extends JButton implements KeyListener {
         this.ip = ip;
         this.name = name;
         this.setSize(DEFAULT_SISE, DEFAULT_SISE);
-        this.setLocation(position);
         this.isOfMe = isOfMe;
         this.myPacmanColor = myColor;
         labelMyName = new JLabel();
@@ -134,7 +135,6 @@ public class SinglePacman extends JButton implements KeyListener {
     }
 
     public void setMyLocation(Point point, char orientation) {
-        this.setLocation(point);
         this.orientation = orientation;
     }
 
@@ -144,11 +144,11 @@ public class SinglePacman extends JButton implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
+        System.out.println("view.SinglePacman.keyPressed()");
         switch (e.getKeyCode()) {
             case KeyEvent.VK_LEFT: {
                 if (getX() >= 0 && getX() <= getParent().getWidth()) {
                     if (getX() > 7) {
-                        setLocation(getX() - 5, getY());
                     }
                     orientation = 'l';
                 }
@@ -157,7 +157,6 @@ public class SinglePacman extends JButton implements KeyListener {
             case KeyEvent.VK_RIGHT: {
                 if (getX() >= 0 && getX() <= getParent().getWidth()) {
                     if (getX() < getParent().getWidth() - DEFAULT_SISE - 7) {
-                        setLocation(getX() + 5, getY());
                     }
                     orientation = 'r';
                 }
@@ -166,7 +165,6 @@ public class SinglePacman extends JButton implements KeyListener {
             case KeyEvent.VK_UP: {
                 if (getY() >= 0 && getY() <= getParent().getHeight()) {
                     if (getY() > 7) {
-                        setLocation(getX(), getY() - 5);
                     }
                     orientation = 'n';
                 }
@@ -175,7 +173,6 @@ public class SinglePacman extends JButton implements KeyListener {
             case KeyEvent.VK_DOWN: {
                 if (getY() >= 0 && getY() <= getParent().getHeight()) {
                     if (getY() < getParent().getHeight() - DEFAULT_SISE - 7) {
-                        setLocation(getX(), getY() + 5);
                     }
                     orientation = 's';
                 }
@@ -219,6 +216,10 @@ public class SinglePacman extends JButton implements KeyListener {
 
     }
 
+    public int getId() {
+        return id;
+    }
+    
     @Override
     public int getX() {
         return x; //To change body of generated methods, choose Tools | Templates.
@@ -241,20 +242,5 @@ public class SinglePacman extends JButton implements KeyListener {
     public void keyReleased(KeyEvent e) {
     }
     
-    public static void main(String[] args) {
-        SinglePacman singlePacman = new SinglePacman("localhost", "pedro", new Point(60, 60), true, Color.yellow);
-        JFrame jFrame = new JFrame();
-        jFrame.setSize(500, 500);
-        jFrame.setLayout(new BorderLayout());
-        JPanel panel = new JPanel();
-        jFrame.add(panel,BorderLayout.CENTER);
-        panel.setLayout(null);
-        panel.add(singlePacman);
-        
-        System.out.println("coordenadasX: "+singlePacman.getLocation().x);
-        System.out.println("coordenadasY: "+singlePacman.getY());
-        System.out.println("coordenadasZ: "+singlePacman.getZ());
-        jFrame.setVisible(true);
-    }
-
+    
 }

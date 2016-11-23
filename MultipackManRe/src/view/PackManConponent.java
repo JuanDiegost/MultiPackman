@@ -7,8 +7,6 @@ package view;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
@@ -24,20 +22,48 @@ public class PackManConponent extends JButton implements Runnable {
     private int score;
     private Color color;
 
-    private int angle;
-    private boolean open;
     private Thread thread;
+    private char orientation;// n ,s ,e, w
+    private int x;
+    private int y;
+    private int z;
+    boolean inverse;
 
     public PackManConponent(String name, int id, int score, Color color) {
         this.name = name;
         this.id = id;
         this.score = score;
         this.color = color;
-        this.angle = 0;
-        this.open = true;
+        this.inverse = true;
+        orientation = 'l';
         this.setEnabled(false);
         thread = new Thread(this);
         thread.start();
+    }
+
+    public void placeTriangle(char orientation) {
+        switch (orientation) {
+            case 'n': {
+                x = 0;
+                y = getWidth();
+            }
+            break;
+            case 's': {
+                x = 0;
+                y = getWidth();
+            }
+            break;
+            case 'l': {
+                x = 0;
+                y = getHeight();
+            }
+            break;
+            case 'r': {
+                x = 0;
+                y = getHeight();
+            }
+            break;
+        }
     }
 
     public int getId() {
@@ -48,64 +74,80 @@ public class PackManConponent extends JButton implements Runnable {
         this.score = score;
     }
 
-    public void moveUp(){
-        angle=-8;
+    public void moveUp() {
+        orientation = 'n';
+        revalidate();
         repaint();
     }
-    
-    public void moveDown(){
-        angle=8;
-    }
-    
-    public void moveRight(){
-        
-    }
-    
-    public void moveLeft(){
-        
-    }
-    
-    public void moveUpLeft(){
-        
+
+    public void moveDown() {
+        orientation = 's';
+        revalidate();
+        repaint();
     }
 
-    public void moveUpRight(){
-        
+    public void moveRight() {
+        orientation = 'r';
+        revalidate();
+        repaint();
     }
-    
-    public void moveDownLeft(){
-        
+
+    public void moveLeft() {
+        orientation = 'l';
+        revalidate();
+        repaint();
     }
-    
-    public void moveDownRight(){
-        
-    }
-    
+
     @Override
     protected void paintComponent(Graphics g) {
-        super.paintComponent(g); //To change body of generated methods, choose Tools | Templates.
-        ((Graphics2D) g).setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        g.setColor(getParent().getBackground());
-        g.fillRect(0, 0, getWidth(), getHeight());
-        g.fillArc(0, 0, getWidth(), getHeight(), angle - 2, 360 - 2 * angle + 4);
+        super.paintComponents(g);
         g.setColor(color);
-        g.fillArc(1, 1, getWidth() - 1, getHeight() - 1, angle, 360 - 2 * angle);
+        g.fillOval(0, 0, getWidth(), getHeight());
+        g.setColor(getParent().getBackground());
+        switch (orientation) {
+            case 'n': {
+                int coordX[] = {x, getWidth() / 2, y};
+                int coordY[] = {0, getHeight() / 2, 0};
+                g.fillPolygon(coordX, coordY, 3);
+            }
+            break;
+            case 's': {
+                int coordX[] = {x, getWidth() / 2, y};
+                int coordY[] = {getHeight(), getHeight() / 2, getHeight()};
+                g.fillPolygon(coordX, coordY, 3);
+            }
+            break;
+            case 'r': {
+                int coordX[] = {getWidth(), getWidth() / 2, getWidth()};
+                int coordY[] = {x, getHeight() / 2, y};
+                g.fillPolygon(coordX, coordY, 3);
+            }
+            break;
+            case 'l': {
+                int coordX[] = {0, getWidth() / 2, 0};
+                int coordY[] = {x, getHeight() / 2, y};
+                g.fillPolygon(coordX, coordY, 3);
+            }
+            break;
+        }
         g.setColor(Color.BLACK);
-        g.drawString(name, 5, getHeight() / 2);
-        g.drawString(score + "", (getWidth() / 2), (getHeight() / 2) + 10);
+        g.drawString(name, 5, getHeight()/2);
+        g.drawString(score+"",(getWidth()/2)-10,(getHeight()/2)+10);
     }
 
     private void animate() {
-        if (open) {
-            if (angle >= 45) {
-                open = false;
+        if (inverse) {
+            if (y >= 0 && x <= getWidth()) {
+                y--;
+                x++;
             } else {
-                angle += 4;
+                inverse = false;
             }
-        } else if (angle <= 0) {
-            open = true;
+        } else if (x >= 0 && y <= getWidth()) {
+            y++;
+            x--;
         } else {
-            angle -= 4;
+            inverse = true;
         }
         revalidate();
         repaint();
@@ -119,6 +161,7 @@ public class PackManConponent extends JButton implements Runnable {
             } catch (InterruptedException ex) {
                 Logger.getLogger(PackManConponent.class.getName()).log(Level.SEVERE, null, ex);
             }
+            placeTriangle(orientation);
             animate();
         }
 

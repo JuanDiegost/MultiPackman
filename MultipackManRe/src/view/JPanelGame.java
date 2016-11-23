@@ -142,6 +142,7 @@ public class JPanelGame extends JPanel {
         abstractPacman.makeMovementLeft(5);
         jBuPacman.setBounds((int) abstractPacman.getX_Pos(), (int) abstractPacman.getY_Pos(),
                 (int) abstractPacman.getWidth(), (int) abstractPacman.getHeight());
+        jBuPacman.moveLeft();
         repaint();
     }
 
@@ -149,6 +150,7 @@ public class JPanelGame extends JPanel {
         abstractPacman.makeMovementRight(5);
         jBuPacman.setBounds((int) abstractPacman.getX_Pos(), (int) abstractPacman.getY_Pos(),
                 (int) abstractPacman.getWidth(), (int) abstractPacman.getHeight());
+        jBuPacman.moveRight();
         repaint();
 
     }
