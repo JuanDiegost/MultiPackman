@@ -110,7 +110,7 @@ public class JPanelGame extends JPanel {
         jbuCookie = new JButton();
         jbuCookie.setBounds((int) positionCookie.getX(), (int) positionCookie.getY(), (int) cookie.getWidth(), (int) cookie.getHeight());
         jbuCookie.setBorder(null);
-//        jbuCookie.setContentAreaFilled(false);
+        jbuCookie.setContentAreaFilled(false);
         jBuPacman.setEnabled(false);
         ImageIcon imageIcon = new ImageIcon("src/iconProyect/galleta.png");
         Icon icon = new ImageIcon(imageIcon.getImage().getScaledInstance((int) cookie.getWidth(), (int) cookie.getHeight(), Image.SCALE_DEFAULT));
