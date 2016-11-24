@@ -11,8 +11,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import value.Global;
 import view.MainWindowServer;
 
@@ -161,8 +159,7 @@ public class Connection extends Thread {
                         userEatCookie();
                         break;
                 }
-            } catch (IOException ex) {
-            } catch (ClassNotFoundException ex) {
+            } catch (IOException | ClassNotFoundException ex) {
             }
         }
     }
@@ -248,10 +245,8 @@ public class Connection extends Thread {
         return new Point((int) (Math.random() * Global.DIMENSION.getWidth()), (int) (Math.random() * Global.DIMENSION.getHeight()));
     }
 
-    private void userEatCookie() {
-        Server.pointCookie = generateCookie();
-        score++;
-        System.out.println(id + " enviar Comfddf");
+    private void userEatCookie() {        
+        score++;      
         synchronized (this) {
             Server.pointCookie = generateCookie();
         }
