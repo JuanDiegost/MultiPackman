@@ -41,7 +41,7 @@ public class JPanelGame extends JPanel {
         this.setLayout(null);
         Border bordejpanel = new TitledBorder(new EtchedBorder(), "Game");
         this.setBorder(bordejpanel);
-        this.setSize(500, 550);
+//        
         arrayButtonsPacman = new ArrayList<>();
         drawButtonPacman(id,name, color);
         drawButtonCookie(pointCookie);

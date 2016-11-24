@@ -18,5 +18,5 @@ public static final String ACTION_DIAG_UP_RIGHT ="move_DIAGUPRI";
 public static final String ACTION_DIAG_UP_LEFT="move_DIAGUPLE";
 public static final String ACTION_DIAG_DOWN_RIGHT ="move_DIAGDORI";
 public static final String ACTION_DIAG_DOWN_LEFT ="move_DIAGDOWLE";
-
+public static final String ACTION_SHOW_BUTTON = "show_button";
 }
