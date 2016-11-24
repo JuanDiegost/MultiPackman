@@ -12,7 +12,7 @@ import view.JPanelGame;
 
 /**
  *
- * @author KAROL ALFONSO
+ * @author Yuliana, Pedro, Karol, Juan, Jhon Edison 
  */
 public abstract class ControllerButtons implements ActionListener {
 
