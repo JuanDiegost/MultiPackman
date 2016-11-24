@@ -5,7 +5,7 @@ import java.awt.Point;
 
 /**
  *
- * @author Karol Alfonso
+ * @author Yuliana, Pedro, Karol, Juan, Jhon Edison 
  */
 public class Pacman extends AbstractPacman{
 private String ip;

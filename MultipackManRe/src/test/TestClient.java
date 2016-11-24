@@ -10,7 +10,7 @@ import model.Client;
 
 /**
  *
- * @author Juan Diego Molina
+ * @author Yuliana, Pedro, Karol, Juan, Jhon Edison 
  */
 public class TestClient {
     

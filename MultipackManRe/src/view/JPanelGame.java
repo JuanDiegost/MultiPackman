@@ -22,8 +22,7 @@ import model.Pacman;
 
 /**
  *
- * @author KAROL ALFONSO
- * @author YULIANA BOYACA
+ * @author Yuliana, Pedro, Karol, Juan, Jhon Edison 
  */
 public class JPanelGame extends JPanel {
 

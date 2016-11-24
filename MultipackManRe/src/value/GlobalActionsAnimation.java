@@ -7,7 +7,7 @@ package value;
 
 /**
  *
- * @author KAROL ALFONSO
+ * @author Yuliana, Pedro, Karol, Juan, Jhon Edison 
  */
 public class GlobalActionsAnimation {
     public static final String ACTION_UP ="move_UP";

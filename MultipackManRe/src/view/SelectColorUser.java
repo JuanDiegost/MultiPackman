@@ -17,7 +17,7 @@ import javax.swing.JPanel;
 
 /**
  *
- * @author Pedro
+ * @author Yuliana, Pedro, Karol, Juan, Jhon Edison 
  */
 public class SelectColorUser extends JDialog {
 

@@ -6,7 +6,7 @@ import javax.swing.JButton;
 
 /**
  *
- * @author Yuliana Boyaca
+ * @author Yuliana, Pedro, Karol, Juan, Jhon Edison 
  */
 public abstract class AbstractPacman {
 

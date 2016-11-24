@@ -5,7 +5,7 @@ import java.awt.Point;
 
 /**
  *
- * @author Yuliana Boyaca
+ * @author Yuliana, Pedro, Karol, Juan, Jhon Edison  
  */
 public class AbstractCookie {
     

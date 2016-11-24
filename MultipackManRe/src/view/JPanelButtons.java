@@ -19,7 +19,7 @@ import value.GlobalActionsAnimation;
 
 /**
  *
- * @author KAROL ALFONSO
+ * @author Yuliana, Pedro, Karol, Juan, Jhon Edison 
  */
 public final class JPanelButtons extends JPanel{
     private JButton jbUp;

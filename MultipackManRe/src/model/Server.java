@@ -20,7 +20,7 @@ import view.MainWindowServer;
  */
 /**
  *
- * @author Juan Diego Molina
+ * @author Yuliana, Pedro, Karol, Juan, Jhon Edison 
  */
 public class Server extends Thread {
 

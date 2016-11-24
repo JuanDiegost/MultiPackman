@@ -21,7 +21,7 @@ import view.WindowClientGame;
 
 /**
  *
- * @author Juan Diego Molina
+ * @author Yuliana, Pedro, Karol, Juan, Jhon Edison 
  */
 public class Client extends controller.ControllerButtons implements Runnable {
 

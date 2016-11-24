@@ -19,7 +19,7 @@ import javax.swing.JPanel;
 
 /**
  *
- * @author Jhon Edison
+ * @author Yuliana, Pedro, Karol, Juan, Jhon Edison 
  */
 public class SinglePacman extends JButton implements KeyListener {
 

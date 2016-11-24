@@ -12,7 +12,7 @@ import model.Server;
 
 /**
  *
- * @author Juan Diego Molina
+ * @author Yuliana, Pedro, Karol, Juan, Jhon Edison 
  */
 public class ServerTest {
     public static void main(String[] args) {

@@ -13,7 +13,7 @@ import javax.swing.JButton;
 
 /**
  *
- * @author Juan Diego Molina
+ * @author Yuliana, Pedro, Karol, Juan, Jhon Edison 
  */
 public class PackManConponent extends JButton implements Runnable {
 

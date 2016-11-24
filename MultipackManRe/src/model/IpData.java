@@ -7,7 +7,7 @@ package model;
 
 /**
  *
- * @author Jhon Edison
+ * @author Yuliana, Pedro, Karol, Juan, Jhon Edison 
  */
 class IpData {
     private int numberOfConettion ;

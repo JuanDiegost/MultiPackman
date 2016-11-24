@@ -25,7 +25,7 @@ import value.GlobalActionsAnimation;
 
 /**
  *
- * @author KAROL ALFONSO
+ * @author Yuliana, Pedro, Karol, Juan, Jhon Edison 
  */
 public class WindowClientGame extends JFrame {
 

@@ -7,7 +7,7 @@ package multipackmanre;
 
 /**
  *
- * @author PC
+ * @author Yuliana, Pedro, Karol, Juan, Jhon Edison 
  */
 public class MultipackManRe {
 
