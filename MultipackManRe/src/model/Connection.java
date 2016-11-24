@@ -252,6 +252,9 @@ public class Connection extends Thread {
         Server.pointCookie = generateCookie();
         score++;
         System.out.println(id + " enviar Comfddf");
+        synchronized (this) {
+            Server.pointCookie = generateCookie();
+        }
         for (Connection connection : Server.listConnections) {
             try {
                 connection.sendString(Global.ACTION_SPAWN_COOKIE);

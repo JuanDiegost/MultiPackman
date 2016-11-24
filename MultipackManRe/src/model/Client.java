@@ -7,7 +7,6 @@ package model;
 
 import java.awt.Color;
 import java.awt.Point;
-import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -104,14 +103,16 @@ public class Client extends controller.ControllerButtons implements Runnable {
                         JOptionPane.showMessageDialog(null, message);
                         break;
                     case Global.ACTION_SPAWN_COOKIE:
-                      Point pointCookie=  (Point) receiveObject();
-                      game.drawnCookie(pointCookie);
+                        synchronized (this) {
+                            Point pointCookie = (Point) receiveObject();
+                            game.drawnCookie(pointCookie);
+                        }
                         break;
                     case Global.ACTION_MOVE_RIVALS_PACKMAN:
                         int id = (int) receiveObject();
                         Point point = (Point) receiveObject();
-                        char d=(char) receiveObject();
-                        game.moveRivals(point, id,d);
+                        char d = (char) receiveObject();
+                        game.moveRivals(point, id, d);
                         break;
                     case Global.ACTION_NEW_OTHER_USER:
                         //Optener id y nombre cliente
@@ -121,7 +122,7 @@ public class Client extends controller.ControllerButtons implements Runnable {
                         Point pointRival = (Point) receiveObject();
                         Color colorRival = (Color) receiveObject();
                         //agrgar rival envia el color
-                        game.addRival(name, idNewClient, pointRival, scoreRival,colorRival);
+                        game.addRival(name, idNewClient, pointRival, scoreRival, colorRival);
                         break;
                     case Global.ACTION_GET_POSITION:
                         sendObject(game.getPositionPacman());
@@ -130,12 +131,12 @@ public class Client extends controller.ControllerButtons implements Runnable {
                         sendObject(this.score);
                         break;
                     case Global.ACTION_CLOSE_CONNECTION_BY_USER:
-                        int idUser=(int) receiveObject();
+                        int idUser = (int) receiveObject();
                         game.removeRival(idUser);
                         break;
                     case Global.ACTION_SCORE:
-                        int idRival=(int)receiveObject();
-                        int scoreRivalEat=(int)receiveObject();
+                        int idRival = (int) receiveObject();
+                        int scoreRivalEat = (int) receiveObject();
                         game.setScoreRival(idRival, scoreRivalEat);
                         break;
                 }
@@ -173,9 +174,9 @@ public class Client extends controller.ControllerButtons implements Runnable {
             String name = JOptionPane.showInputDialog("Por favor escriba Su nombre: ");
             selectColorUser.setVisible(true);
             Color color = null;
-            while (color == null) {                
-               color=selectColorUser.getColor();
-               System.out.println();
+            while (color == null) {
+                color = selectColorUser.getColor();
+                System.out.println();
             }
             selectColorUser.setVisible(false);
             sendString(Global.ACTION_REGISTER);
@@ -184,10 +185,10 @@ public class Client extends controller.ControllerButtons implements Runnable {
             sendObject(new Point(30, 50));
             sendObject(color);
             System.out.println("model.Client.register()");
-            Point pointCookie=(Point) receiveObject();
-            int id=(int) receiveObject();
+            Point pointCookie = (Point) receiveObject();
+            int id = (int) receiveObject();
             System.out.println("model.Client.register()");
-            this.game = new WindowClientGame(0,address.getHostAddress(), name, new Point(30, 50),pointCookie,color);
+            this.game = new WindowClientGame(0, address.getHostAddress(), name, new Point(30, 50), pointCookie, color);
             game.setController(this);
             setjPanelGame(game.getjPanelGame());
             game.setVisible(true);
