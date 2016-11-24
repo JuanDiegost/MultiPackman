@@ -6,12 +6,19 @@
 package view;
 
 import controller.ControllerButtons;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.KeyEventDispatcher;
 import java.awt.KeyboardFocusManager;
 import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import model.Client;
 import value.Global;
 import value.GlobalActionsAnimation;
@@ -28,16 +35,28 @@ public class WindowClientGame extends JFrame {
     private Point positionPacman;
     private String ip;
     private String name;
+    private JMenuBar jMenuBar;
+    private final JMenu menuArchivo;
+    private final JMenuItem ActionsMove;
+    private final JMenuItem ActionsMoveFalse;
 
     public WindowClientGame(int id,String ip, String name, Point positionPacman, Point positionCookie, Color color) {
+        this.setSize(900, 550);
+        this.setLayout(new BorderLayout());
+        jMenuBar = new JMenuBar();
+        this.setJMenuBar(jMenuBar);
+        menuArchivo = new JMenu("Mover");
+        ActionsMove = new JMenuItem("Mostrar botones");
+        ActionsMoveFalse = new JMenuItem("Ocultar botones");
+        jMenuBar.add(menuArchivo);
+        
         this.ip = ip;
         this.name = name;
         this.positionPacman = positionPacman;
         jPanelGame = new JPanelGame(ip,id, name, positionPacman, positionCookie, color);
-        this.add(jPanelGame);
+        jPanelGame.setSize(this.getWidth(), this.getHeight());
+        this.add(jPanelGame, BorderLayout.CENTER);
         //this.setTitle("GAME PACMAN");
-        this.setSize(900, 550);
-        this.setLayout(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         addKey();
     }
@@ -65,8 +84,34 @@ public class WindowClientGame extends JFrame {
 
     public void setController(ControllerButtons controllerButtons) {
         this.controllerButtons = controllerButtons;
-        jPanelButtons = new JPanelButtons(controllerButtons);
-        this.add(jPanelButtons);
+         menuArchivo.add(ActionsMove);
+        ActionsMove.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                jPanelButtons = new JPanelButtons(controllerButtons);
+                addAction();
+            }
+        });
+         menuArchivo.add(ActionsMoveFalse);
+         ActionsMoveFalse.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                buttonsVisibleFalse();
+            }
+        });
+    }
+    
+    public void addAction(){
+        this.setLayout(null);
+        jPanelGame.setSize(500, 550);
+         this.add(jPanelButtons);
+         this.revalidate();
+    }
+    
+    public void buttonsVisibleFalse(){
+        this.setLayout(new BorderLayout());
+        jPanelButtons.setVisible(false);
+        this.add(jPanelGame, BorderLayout.CENTER);
     }
 
     public void init() {
@@ -97,13 +142,13 @@ public class WindowClientGame extends JFrame {
         jPanelGame.setPositionCookie(point);
     }
 
-    public JPanelButtons getjPanelButtons() {
-        return jPanelButtons;
-    }
-
-    public void setjPanelButtons(JPanelButtons jPanelButtons) {
-        this.jPanelButtons = jPanelButtons;
-    }
+//    public JPanelButtons getjPanelButtons() {
+//        return jPanelButtons;
+//    }
+//
+//    public void setjPanelButtons(JPanelButtons jPanelButtons) {
+//        this.jPanelButtons = jPanelButtons;
+//    }
 
     public JPanelGame getjPanelGame() {
         return jPanelGame;
